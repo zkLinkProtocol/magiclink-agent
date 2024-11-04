@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from phi.agent import Agent
+# from phi.model.anthropic import Claude
 from phi.model.openai import OpenAIChat
 from rich.prompt import Prompt
 from prompt import system_prompt, nft_prompt
@@ -59,13 +60,14 @@ def buy_nft(name: str, contract: str):
 def chatbot():
   session_id = None
   agent = Agent(
-    model = OpenAIChat(id='gpt-4o-mini'),
+    model = OpenAIChat(id = 'gpt-4o-mini')
+    # model = Claude(id = 'claude-3-haiku-20240307'),
     add_history_to_messages = True,
     system_prompt = system_prompt,
     tools = [get_popular_nft, buy_nft],
     use_tools = True,
     show_tool_calls = True,
-    debug_mode = True,
+    # debug_mode = True,
   )
   if session_id is None:
     session_id = agent.session_id
