@@ -1,0 +1,6 @@
+openai
+typing-extensions
+phidata
+python-dotenv
+pandas
+numpy
