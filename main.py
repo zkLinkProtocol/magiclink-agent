@@ -4,6 +4,7 @@ from phi.agent import Agent
 from phi.model.openai import OpenAIChat
 from rich.prompt import Prompt
 from prompt import *
+from swap import *
 import httpx
 import typer
 import json
@@ -70,7 +71,7 @@ def donate(token: str, amount: str, reciptient: str):
   """
   return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=buy-me-a-coffee'})
 
-def swap(token_from: str, token_to: str, amount: str):
+def swap(token_from: str, token_to: str, amount: float):
   """Use this function to swap or buy one token from another token. Return error if given token is unsupported.
 
   Args:
@@ -81,7 +82,12 @@ def swap(token_from: str, token_to: str, amount: str):
   Returns:
     str: JSON string of magicLinks to swap token.
   """
-  return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=novaswap'})
+  if token_from not in ERC20s:
+    raise ValueError('token_from is not supported')
+  if token_to not in ERC20s:
+    raise ValueError('token_to is not supported')
+  real_amount = int(amount * 10 ** ERC20s[token_from]['Decimals'])
+  return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=novaswap' + "?from=" + token_from + "&to=" + token_to + "&amount=" + str(real_amount)})
 
 def mint_nft(nft_name: str, quantity: int, reciptient: str):
   """Use this function to mint NFT.
