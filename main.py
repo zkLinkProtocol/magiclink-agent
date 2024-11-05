@@ -19,7 +19,7 @@ def get_popular_nft(num: int = 5):
     num (str): Number of NFT to return. Defaults to 5.
 
   Returns:
-    str: JSON string of NFT infomation.
+    str: JSON string of NFT information.
   """
   resp = httpx.get(f'https://api-base.reservoir.tools/collections/trending/v1?limit={num}')
   nft_info = resp.json()
@@ -59,13 +59,13 @@ def buy_nft(name: str, contract: str):
   # return json.dumps({'url': magic_link_url})
   return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=buy-nft-okx'})
 
-def donate(token: str, amount: str, reciptient: str):
-  """Use this function to send token to reciptient.
+def donate(token: str, amount: str, recipient: str):
+  """Use this function to send token to recipient.
 
   Args:
-    token (str): Token name.
+    token (str): Token symbol.
     amount (str): Amount of donation.
-    reciptient (str): Address to receive token.
+    recipient (str): Address to receive token.
 
   Returns:
     str: JSON string of magicLinks to send token.
@@ -76,8 +76,8 @@ def swap(token_from: str, token_to: str, amount: float):
   """Use this function to swap or buy one token from another token. Return error if given token is unsupported.
 
   Args:
-    token_from (str): From token name.
-    token_to (str): To token name.
+    token_from (str): From token symbol.
+    token_to (str): To token symbol.
     amount (str): Amount of ***token_from***.
 
   Returns:
@@ -90,13 +90,13 @@ def swap(token_from: str, token_to: str, amount: float):
   real_amount = int(amount * 10 ** ERC20s[token_from]['Decimals'])
   return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=novaswap' + "?from=" + token_from + "&to=" + token_to + "&amount=" + str(real_amount)})
 
-def mint_nft(nft_name: str, quantity: int, reciptient: str):
+def mint_nft(nft_name: str, quantity: int, recipient: str):
   """Use this function to mint NFT.
 
   Args:
     nft_name (str): NFT name.
     quantity (str): Number of NFTs to be minted.
-    reciptient (str): Address to receive NFT.
+    recipient (str): Address to receive NFT.
 
   Returns:
     str: JSON string of magicLinks to mint NFT.
@@ -107,7 +107,7 @@ def send_red_packet(token: str, number: int, total_amount: str):
   """Use this function to send red packet.
 
   Args:
-    token (str): Token name.
+    token (str): Token symbol.
     number (str): Number of red packets.
     total_amount (str): Amount of distributed token.
 
