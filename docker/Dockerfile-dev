@@ -1,0 +1,10 @@
+FROM 475911326710.dkr.ecr.ap-northeast-1.amazonaws.com/python:3.12.7-slim-bookworm
+
+WORKDIR /usr/src/app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD [ "python", "./main.py", "s" ]
