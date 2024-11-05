@@ -47,7 +47,7 @@ You should focus on magicLink, Avoid speaking specifically about other cryptocur
 各种actions的名字（例如Buy Me A Coffee和Magic News）保持原文，不需要翻译或更改，应保持原样。
 '''
 
-nft_prompt = '''
+nft_body = '''
 {
   "actionId": "buy-nft-magic-eden",
   "title": "%s",

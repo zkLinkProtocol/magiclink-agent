@@ -1,7 +1,5 @@
 openai
-anthropic
-typing-extensions
+# anthropic
 phidata
 python-dotenv
-pandas
-numpy
+fastapi[standard]
