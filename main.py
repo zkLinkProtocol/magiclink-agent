@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 from phi.agent import Agent
 # from phi.model.anthropic import Claude
 from phi.model.openai import OpenAIChat
+from phi.playground import Playground, serve_playground_app
 from rich.prompt import Prompt
 from prompt import *
 import httpx
@@ -134,7 +135,13 @@ def terminal():
       break
     chatbot.print_response(message)
 
+app = Playground(agents=[chatbot]).get_app()
+
 if __name__ == "__main__":
   # print(get_popular_nft(1))
   # print(buy_nft('Gemesis', '0xd0f6a80064580b685e71359277370d6d4eece3a4'))
-  typer.run(terminal)
+  import sys
+  if len(sys.argv) > 1 and sys.argv[1] == 's':
+    serve_playground_app("main:app", reload=True)
+  else:
+    typer.run(terminal)
