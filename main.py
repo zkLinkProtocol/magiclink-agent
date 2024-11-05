@@ -71,7 +71,7 @@ def donate(token: str, amount: str, reciptient: str):
   return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=buy-me-a-coffee'})
 
 def swap(token_from: str, token_to: str, amount: str):
-  """Use this function to swap tokens from token.
+  """Use this function to swap or buy one token from another token. Return error if given token is unsupported.
 
   Args:
     token_from (str): From token name.
