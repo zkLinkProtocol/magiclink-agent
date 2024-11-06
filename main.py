@@ -47,17 +47,6 @@ def buy_nft(name: str, contract: str):
   Returns:
     str: JSON string of magicLinks to buy the nft.
   """
-  # import os
-  # post_body = nft_body % (name, contract)
-  # headers = {
-  #   'Content-Type': 'application/json',
-  #   'Authorization': os.environ['ACTION_TOKEN']
-  # }
-  # resp = httpx.post('https://api-intent.sepolia.zklink.io/api/action-url', content = post_body, headers = headers)
-  # info = resp.json()
-  # magic_link_url = f'https://magic-test.zklink.io/intent/{info["data"]}'
-  # print(f'已为您创建购买{name}的magicLink：{magic_link_url}')
-  # return json.dumps({'url': magic_link_url})
   return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=buy-nft-okx'})
 
 def donate(token: str, amount: str, recipient: str):
@@ -151,6 +140,6 @@ if __name__ == "__main__":
   # print(buy_nft('Gemesis', '0xd0f6a80064580b685e71359277370d6d4eece3a4'))
   import sys
   if len(sys.argv) > 1 and sys.argv[1] == 's':
-    serve_playground_app("main:app", reload=True)
+    serve_playground_app("main:app", host = '0.0.0.0' reload = True)
   else:
     typer.run(terminal)
