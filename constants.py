@@ -6,7 +6,7 @@ Chains = {
       'ETH': '',
     },
   },
-  'op': {
+  'optimism': {
     'id': 10,
     'action': ['send', 'swap'],
     'token': {
@@ -75,6 +75,14 @@ Chains = {
     },
   },
 }
+
+# chain alias
+Chains.update({
+  'zklink': Chains['nova'],
+  'op': Chains['optimism'],
+  'arbi': Chains['arbitrum'],
+  'bnb': Chains['bsc'],
+})
 
 magicLinkCode = {
   'send': 'WqL5jFAm',
