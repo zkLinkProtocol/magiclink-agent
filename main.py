@@ -140,6 +140,6 @@ if __name__ == "__main__":
   # print(buy_nft('Gemesis', '0xd0f6a80064580b685e71359277370d6d4eece3a4'))
   import sys
   if len(sys.argv) > 1 and sys.argv[1] == 's':
-    serve_playground_app("main:app", host = '0.0.0.0' reload = True)
+    serve_playground_app("main:app", host = '0.0.0.0')
   else:
     typer.run(terminal)
