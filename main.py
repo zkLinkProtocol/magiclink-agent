@@ -43,18 +43,6 @@ def get_popular_nft(num: int = 5, chain: str = 'Ethereum'):
   except:
     return json.dumps({"error": "Failed to get NFT detail through Magic Eden"})
 
-def buy_nft(name: str, contract: str):
-  """Use this function to buy NFT.
-
-  Args:
-    name (str): Name of the NFT.
-    contract (str): Contract address of the NFT.
-
-  Returns:
-    str: JSON string of magicLinks to buy the nft.
-  """
-  return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=buy-nft-okx'})
-
 def send_token(token: str, amount: str, recipient: str, chain: str = 'Ethereum'):
   """Use this function to send token to recipient.
 
@@ -116,41 +104,13 @@ def swap(token_from: str, token_to: str, amount: str, chain: str = 'Arbitrum'):
   except:
     return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=magic-swap'})
 
-def mint_nft(nft_name: str, quantity: int, recipient: str):
-  """Use this function to mint NFT.
-
-  Args:
-    nft_name (str): NFT name.
-    quantity (str): Number of NFTs to be minted.
-    recipient (str): Address to receive NFT.
-
-  Returns:
-    str: JSON string of magicLinks to mint NFT.
-  """
-  return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=mint-nft'})
-
-def send_red_packet(token: str, number: int, total_amount: str):
-  """Use this function to send red packet.
-
-  Args:
-    token (str): Token symbol.
-    number (str): Number of red packets.
-    total_amount (str): Amount of distributed token.
-
-  Returns:
-    str: JSON string of magicLinks to send red packet.
-  """
-  return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=red-envelope'})
-
 chatbot = Agent(
   agent_id = 'magicLinkAgent',
   model = OpenAIChat(id = 'gpt-4o-mini'),
   # model = Claude(id = 'claude-3-haiku-20240307'),
   add_history_to_messages = True,
   system_prompt = system_prompt,
-  tools = [get_popular_nft, buy_nft, send_token, swap, mint_nft, send_red_packet,
-          #  GoogleSearch()
-           ],
+  tools = [get_popular_nft, send_token, swap],
   use_tools = True,
   show_tool_calls = True,
   debug_mode = False,

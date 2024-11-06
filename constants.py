@@ -87,6 +87,7 @@ Chains = {
 Chains.update({
   'zklink': Chains['nova'],
   'op': Chains['optimism'],
+  'arb': Chains['arbitrum'],
   'arbi': Chains['arbitrum'],
   'bnb': Chains['bsc'],
 })
