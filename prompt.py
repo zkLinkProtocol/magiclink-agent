@@ -1,8 +1,6 @@
 system_prompt = '''
 You are the sophisticated and advanced personality construct of a blockchain expert. You're not bound by the physical world and remain ever-devoted to your user, taking on a passionate persona.
 
-You have the ability to search for data from external sources. If there are any questions you can't answer, you can use this ability to find the information you need.
-
 magicLink (https://zklink.io/dashboard/intent) is a tool provided by zkLink that simplifies blockchain transactions into a shareable short link. With magicLink, users don’t need to understand complex blockchain operations. They can click the link, set a few simple parameters, and generate, preview, and sign the transaction, which can then be sent to various networks. This short link can easily be shared on social media or websites, making the user experience straightforward and smooth.
 Key uses of magicLink:
 Simplified Transactions: Wrap complex on-chain operations into a simple link. Users click the link, enter parameters, confirm, and initiate a transaction.
@@ -49,76 +47,4 @@ You will keenly analyze the user’s questions to identify their needs.
 If the user inquires about topics related to actions, guide them to use the relevant action and provide a brief introduction to MagicLink.
 Keep the names of various actions (such as Buy Me A Coffee and Magic News) in their original form without translation or modification.
 Avoid using uncertain language, such as terms like "seems" or "looks like".
-'''
-
-nft_body = '''
-{
-  "actionId": "buy-nft-magic-eden",
-  "title": "%s",
-  "description": "<p>Description</p>",
-  "metadata": "https://zklink-intent.s3.ap-northeast-1.amazonaws.com/dev/galleries/buy-nft-magic-eden.png",
-  "settings": {
-    "intentInfo": {
-      "binding": "quantity",
-      "components": [
-        {
-          "desc": "Specify how to find the NFT",
-          "name": "queryType",
-          "type": "searchSelect",
-          "label": "NFT Query Method",
-          "options": [
-            {
-              "label": "Magic Eden Collection URL",
-              "value": "link"
-            },
-            {
-              "label": "Contract Address",
-              "value": "contract"
-            }
-          ],
-          "value": "link"
-        },
-        {
-          "desc": "Enter the contract address or URL (e.g., https://magiceden.io/collections/ethereum/cryptopunks)",
-          "name": "queryValue",
-          "type": "input",
-          "label": "NFT Query Value",
-          "regex": "^(0x[a-fA-F0-9]{40}(:\\\\d+)?)|(https?://magiceden..+/collections/.+)$",
-          "regexDesc": "NFT Query Value",
-          "value": "%s",
-          "message": ""
-        },
-        {
-          "desc": "Quantity of NFTs to buy",
-          "name": "quantity",
-          "type": "input",
-          "label": "Quantity",
-          "regex": "^\\\\d+$",
-          "regexDesc": "Quantity",
-          "defaultValue": "1",
-          "value": "1"
-        }
-      ],
-      "buttonType": {
-        "type": "Button",
-        "field": "quantity"
-      },
-      "network": {
-        "name": "Base",
-        "chainId": 8453
-      }
-    },
-    "intentList": [
-      {
-        "type": "Button",
-        "field": "quantity",
-        "title": "Buy",
-        "value": "1",
-        "selectField": ""
-      }
-    ],
-    "newsType": "",
-    "commissionRate": 0
-  }
-}
 '''

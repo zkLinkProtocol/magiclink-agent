@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from phi.agent import Agent
-from phi.tools.googlesearch import GoogleSearch
+# from phi.tools.googlesearch import GoogleSearch
 # from phi.model.anthropic import Claude
 from phi.model.openai import OpenAIChat
 from phi.playground import Playground, serve_playground_app
@@ -113,7 +113,7 @@ chatbot = Agent(
   add_history_to_messages = True,
   system_prompt = system_prompt,
   tools = [get_popular_nft, buy_nft, donate, swap, mint_nft, send_red_packet,
-           GoogleSearch()
+          #  GoogleSearch()
            ],
   use_tools = True,
   show_tool_calls = True,
