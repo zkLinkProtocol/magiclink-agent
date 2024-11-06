@@ -7,7 +7,6 @@ from phi.playground import Playground, serve_playground_app
 from rich.prompt import Prompt
 from constants import *
 from prompt import *
-from swap import *
 import httpx
 import typer
 import json
@@ -64,8 +63,11 @@ def send_token(token: str, amount: str, recipient: str, chain: str = 'Ethereum')
     str: JSON string of magicLinks to send token.
   """
   try:
-    chainId = Chains[chain.lower()]['id']
-    tokenAddress = Chains[chain.lower()]['token'][token.upper()]
+    info = Chains[chain.lower()]
+    if 'send' not in info['action']:
+      raise Exception(f'Send action currently unavailable on {chain}')
+    chainId = info['id']
+    tokenAddress = info['token'][token.upper()]
     param = quote(json.dumps({
       "chainId": chainId,
       "params": {
@@ -78,8 +80,8 @@ def send_token(token: str, amount: str, recipient: str, chain: str = 'Ethereum')
   except:
     return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=buy-me-a-coffee'})
 
-def swap(token_from: str, token_to: str, amount: float):
-  """Use this function to swap or buy one token from another token. Return error if given token is unsupported.
+def swap(token_from: str, token_to: str, amount: str, chain: str = 'Ethereum'):
+  """Use this function to swap or buy one token from another token
 
   Args:
     token_from (str): From token symbol.
@@ -89,12 +91,24 @@ def swap(token_from: str, token_to: str, amount: float):
   Returns:
     str: JSON string of magicLinks to swap token.
   """
-  if token_from not in ERC20s:
-    raise ValueError('token_from is not supported')
-  if token_to not in ERC20s:
-    raise ValueError('token_to is not supported')
-  real_amount = int(amount * 10 ** ERC20s[token_from]['Decimals'])
-  return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=novaswap' + "?from=" + token_from + "&to=" + token_to + "&amount=" + str(real_amount)})
+  try:
+    info = Chains[chain.lower()]
+    if 'swap' not in info['action']:
+      raise Exception(f'Swap action currently unavailable on {chain}')
+    chainId = info['id']
+    fromAddress = info['token'][token_from.upper()]
+    toAddress = info['token'][token_to.upper()]
+    param = quote(json.dumps({
+      "chainId": chainId,
+      "params": {
+        "amountToBuy": amount,
+        "tokenFrom": fromAddress,
+        "tokenTo": toAddress,
+      }
+    }, separators=(',', ':')))
+    return json.dumps({'url': f"https://magic.zklink.io/intent/{magicLinkCode['swap']}/confirm?params={param}"})
+  except:
+    return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=magic-swap'})
 
 def mint_nft(nft_name: str, quantity: int, recipient: str):
   """Use this function to mint NFT.
@@ -154,6 +168,7 @@ app = Playground(agents=[chatbot]).get_app()
 if __name__ == "__main__":
   # print(get_popular_nft(1))
   # print(send_token('usdc', 100, '0x1234567890123456789012345678901234567890', 'arbitrum'))
+  # print(swap('usdc', 'eth', 100, 'arbitrum'))
   import sys
   if len(sys.argv) > 1 and sys.argv[1] == 's':
     serve_playground_app("main:app", host = '0.0.0.0')
