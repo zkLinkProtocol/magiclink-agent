@@ -1,19 +1,22 @@
 ERC20s = {
     "ETH": {
-        "Address": "0x000000000000000000000000000000000000800A",
+        "Address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
         "Decimals": 18,
-
     },
     "ARB": {
-        "Address": "0xcb70533c9635060275F1A97539dda2E3f8bFac42",
+        "Address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
         "Decimals": 18,
     },
     "USDC": {
-        "Address": "0x1a1A3b2ff016332e866787B311fcB63928464509",
+        "Address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        "Decimals": 6,
+    },
+    "USDT": {
+        "Address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
         "Decimals": 6,
     },
     "WBTC": {
-        "Address": "0xDa4AaEd3A53962c83B35697Cd138cc6df43aF71f",
+        "Address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
         "Decimals": 8,
-    }
+    },
 }
