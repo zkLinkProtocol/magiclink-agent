@@ -5,11 +5,13 @@ from phi.agent import Agent
 from phi.model.openai import OpenAIChat
 from phi.playground import Playground, serve_playground_app
 from rich.prompt import Prompt
+from constants import *
 from prompt import *
 from swap import *
 import httpx
 import typer
 import json
+from urllib.parse import quote
 
 load_dotenv()
 
@@ -49,18 +51,32 @@ def buy_nft(name: str, contract: str):
   """
   return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=buy-nft-okx'})
 
-def donate(token: str, amount: str, recipient: str):
+def send_token(token: str, amount: str, recipient: str, chain: str = 'Ethereum'):
   """Use this function to send token to recipient.
 
   Args:
     token (str): Token symbol.
     amount (str): Amount of donation.
     recipient (str): Address to receive token.
+    chain (str): Blockchain name. Defaults to Ethereum.
 
   Returns:
     str: JSON string of magicLinks to send token.
   """
-  return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=buy-me-a-coffee'})
+  try:
+    chainId = Chains[chain.lower()]['id']
+    tokenAddress = Chains[chain.lower()]['token'][token.upper()]
+    param = quote(json.dumps({
+      "chainId": chainId,
+      "params": {
+        "token": tokenAddress,
+        "value": amount,
+        "recipient": recipient,
+      }
+    }, separators=(',', ':')))
+    return json.dumps({'url': f"https://magic.zklink.io/intent/{magicLinkCode['send']}/confirm?params={param}"})
+  except:
+    return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=buy-me-a-coffee'})
 
 def swap(token_from: str, token_to: str, amount: float):
   """Use this function to swap or buy one token from another token. Return error if given token is unsupported.
@@ -112,7 +128,7 @@ chatbot = Agent(
   # model = Claude(id = 'claude-3-haiku-20240307'),
   add_history_to_messages = True,
   system_prompt = system_prompt,
-  tools = [get_popular_nft, buy_nft, donate, swap, mint_nft, send_red_packet,
+  tools = [get_popular_nft, buy_nft, send_token, swap, mint_nft, send_red_packet,
           #  GoogleSearch()
            ],
   use_tools = True,
@@ -137,7 +153,7 @@ app = Playground(agents=[chatbot]).get_app()
 
 if __name__ == "__main__":
   # print(get_popular_nft(1))
-  # print(buy_nft('Gemesis', '0xd0f6a80064580b685e71359277370d6d4eece3a4'))
+  # print(send_token('usdc', 100, '0x1234567890123456789012345678901234567890', 'arbitrum'))
   import sys
   if len(sys.argv) > 1 and sys.argv[1] == 's':
     serve_playground_app("main:app", host = '0.0.0.0')

@@ -19,13 +19,14 @@ Action: A standardized API implementation for generating transactions.
 magicLink: A shareable link for executing actions on the zkLink Nova network.
 
 Currently, magicLink has the following actions:
-Buy Me A Coffee (https://zklink.io/dashboard/intent?id=buy-me-a-coffee): This action allows you to create a Magic Link to receive donations
+Buy Me A Coffee (https://zklink.io/dashboard/intent?id=buy-me-a-coffee): This action allows you to create a Magic Link to send tokens or receive donations
 Buy NFT From Magic Eden (https://zklink.io/dashboard/intent?id=buy-nft-magic-eden): This action allows you to buy NFT from Magic Eden
 Buy NFT From OKX (https://zklink.io/dashboard/intent?id=buy-nft-okx): This action allows you to buy NFT from OKX Marketplace
 Cross Chain Swap (https://zklink.io/dashboard/intent?id=cross-chain-swap): Perform cross-chain token swaps seamlessly across multiple networks
 Mint NFT (https://zklink.io/dashboard/intent?id=mint-nft): This action allows you to mint NFT
 Mint Nova Cubo NFT (https://zklink.io/dashboard/intent?id=mint-nova-nft): This action allows you to mint Nova Cubo NFT
 Magic News (https://zklink.io/dashboard/intent?id=magic-swap): Perform news seamlessly across multiple networks
+Magic Swap (https://zklink.io/dashboard/intent?id=magic-swap): This action is designed to allow you to create token swap via OKX swap
 Novaswap (https://zklink.io/dashboard/intent?id=novaswap): This action is designed to allow you to create token swap on """https://novaswap.fi"""
 PreSale (https://zklink.io/dashboard/intent?id=pre-sale): PreSale is a platform for participating in token presales
 PumpFun (https://zklink.io/dashboard/intent?id=pump-fun): PumpFun is a platform for creating and participating in token pump events
