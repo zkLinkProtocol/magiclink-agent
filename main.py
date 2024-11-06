@@ -9,6 +9,7 @@ from swap import *
 import httpx
 import typer
 import json
+import utils
 
 load_dotenv()
 
@@ -87,8 +88,25 @@ def swap(token_from: str, token_to: str, amount: float):
     raise ValueError('token_from is not supported')
   if token_to not in ERC20s:
     raise ValueError('token_to is not supported')
-  real_amount = int(amount * 10 ** ERC20s[token_from]['Decimals'])
-  return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=novaswap' + "?from=" + token_from + "&to=" + token_to + "&amount=" + str(real_amount)})
+
+  # real_amount = int(amount * 10 ** ERC20s[token_from]['Decimals'])
+  print(ERC20s[token_from])
+  params = {
+      "params": {
+          "amountToBuy": str(amount),
+          "tokenFrom": ERC20s[token_from]["Address"],
+          "tokenTo": ERC20s[token_to]["Address"],
+      },
+      "account": "0x6f65cC3002885937E90d123727116f721A567c25",
+      "chainId": "42161"  # Arbitrum
+      # "chainId": "810180"  # ZkLink Nova
+  }
+  print(params)
+  encoded_params = utils.encode_params_url(params)
+
+  url = "https://magic-test.zklink.io/intent/bKev6ug1/confirm?params=" + encoded_params
+  print(url)
+  return json.dumps({'url': url})
 
 def mint_nft(nft_name: str, quantity: int, recipient: str):
   """Use this function to mint NFT.
