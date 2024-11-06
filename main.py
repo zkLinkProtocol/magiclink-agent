@@ -77,9 +77,9 @@ def swap(token_from: str, token_to: str, amount: float):
   """Use this function to swap or buy one token from another token. Return error if given token is unsupported.
 
   Args:
-    token_from (str): From token symbol.
-    token_to (str): To token symbol.
-    amount (str): Amount of ***token_from***.
+    token_from (str): The symbol of token that you want to swap.
+    token_to (str): The symbol of token that you want to swap for.
+    amount (str): The amount of token that you want to swap (**token_from**).
 
   Returns:
     str: JSON string of magicLinks to swap token.
@@ -90,22 +90,19 @@ def swap(token_from: str, token_to: str, amount: float):
     raise ValueError('token_to is not supported')
 
   # real_amount = int(amount * 10 ** ERC20s[token_from]['Decimals'])
-  print(ERC20s[token_from])
   params = {
       "params": {
           "amountToBuy": str(amount),
           "tokenFrom": ERC20s[token_from]["Address"],
           "tokenTo": ERC20s[token_to]["Address"],
       },
-      "account": "0x6f65cC3002885937E90d123727116f721A567c25",
+      # "account": "0x6f65cC3002885937E90d123727116f721A567c25",
       "chainId": "42161"  # Arbitrum
       # "chainId": "810180"  # ZkLink Nova
   }
-  print(params)
   encoded_params = utils.encode_params_url(params)
 
   url = "https://magic-test.zklink.io/intent/bKev6ug1/confirm?params=" + encoded_params
-  print(url)
   return json.dumps({'url': url})
 
 def mint_nft(nft_name: str, quantity: int, recipient: str):
