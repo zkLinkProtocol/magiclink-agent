@@ -5,6 +5,7 @@ Chains = {
     'token': {
       'ETH': '',
     },
+    'magiceden_alias': '',
   },
   'optimism': {
     'id': 10,
@@ -19,6 +20,7 @@ Chains = {
     'token': {
       'ETH': '',
     },
+    'magiceden_alias': '-base',
   },
   'arbitrum': {
     'id': 42161,
@@ -28,6 +30,7 @@ Chains = {
       'USDT': '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
       'USDC': '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
     },
+    'magiceden_alias': '-arbitrum',
   },
   'nova': {
     'id': 810180,
@@ -44,6 +47,7 @@ Chains = {
     'token': {
       'ETH': '',
     },
+    'magiceden_alias': '-linea',
   },
   'manta': {
     'id': 169,
@@ -58,10 +62,12 @@ Chains = {
     'token': {
       'ETH': '',
     },
+    'magiceden_alias': '-scroll',
   },
   'zksync': {
     'id': 324,
     'action': ['send'],
+    'magiceden_alias': '-zksync',
   },
   'mantle': {
     'id': 5000,
@@ -73,6 +79,7 @@ Chains = {
     'token': {
       'BNB': '',
     },
+    'magiceden_alias': '-bsc',
   },
 }
 

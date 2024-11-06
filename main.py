@@ -14,7 +14,7 @@ from urllib.parse import quote
 
 load_dotenv()
 
-def get_popular_nft(num: int = 5):
+def get_popular_nft(num: int = 5, chain: str = 'Ethereum'):
   """Use this function to get popular NFT.
 
   Args:
@@ -23,20 +23,24 @@ def get_popular_nft(num: int = 5):
   Returns:
     str: JSON string of NFT information.
   """
-  resp = httpx.get(f'https://api-base.reservoir.tools/collections/trending/v1?limit={num}')
-  nft_info = resp.json()
-  nfts = []
-  for info in nft_info['collections']:
-    floorAsk = info['floorAsk']
-    floorPrice = floorAsk['price']['amount']['decimal']
-    priceSymbol = floorAsk['price']['currency']['symbol']
-    nfts.append({
-      'name': info['name'],
-      'price': f'{floorPrice} {priceSymbol}',
-      'image': info['image'],
-      'contract': info['id'],
-    })
-  return json.dumps(nfts)
+  try:
+    info = Chains[chain.lower()]
+    resp = httpx.get(f'https://api{info["magiceden_alias"]}.reservoir.tools/collections/trending/v1?limit={num}')
+    nft_info = resp.json()
+    nfts = []
+    for info in nft_info['collections']:
+      floorAsk = info['floorAsk']
+      floorPrice = floorAsk['price']['amount']['decimal']
+      priceSymbol = floorAsk['price']['currency']['symbol']
+      nfts.append({
+        'name': info['name'],
+        'price': f'{floorPrice} {priceSymbol}',
+        'image': info['image'],
+        'contract': info['id'],
+      })
+    return json.dumps(nfts)
+  except:
+    return json.dumps({"error": "Failed to get NFT detail through Magic Eden"})
 
 def buy_nft(name: str, contract: str):
   """Use this function to buy NFT.
