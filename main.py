@@ -19,6 +19,7 @@ def get_popular_nft(num: int = 5, chain: str = 'Ethereum'):
 
   Args:
     num (str): Number of NFT to return. Defaults to 5.
+    chain (str): Blockchain name. Defaults to Ethereum.
 
   Returns:
     str: JSON string of NFT information.
@@ -84,13 +85,14 @@ def send_token(token: str, amount: str, recipient: str, chain: str = 'Ethereum')
   except:
     return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=buy-me-a-coffee'})
 
-def swap(token_from: str, token_to: str, amount: str, chain: str = 'Ethereum'):
+def swap(token_from: str, token_to: str, amount: str, chain: str = 'Arbitrum'):
   """Use this function to swap or buy one token from another token
 
   Args:
-    token_from (str): From token symbol.
-    token_to (str): To token symbol.
-    amount (str): Amount of ***token_from***.
+    token_from (str): The symbol of token that you want to swap.
+    token_to (str): The symbol of token that you want to swap for.
+    amount (str): The amount of token that you want to swap (**token_from**).
+    chain (str): Blockchain name. Defaults to Arbitrum.
 
   Returns:
     str: JSON string of magicLinks to swap token.
