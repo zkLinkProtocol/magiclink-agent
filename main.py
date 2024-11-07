@@ -4,6 +4,7 @@ from phi.agent import Agent
 # from phi.model.anthropic import Claude
 from phi.model.openai import OpenAIChat
 from phi.playground import Playground, serve_playground_app
+from phi.storage.agent.sqlite import SqlAgentStorage
 from rich.prompt import Prompt
 from constants import *
 from okx import OKX
@@ -126,6 +127,7 @@ chatbot = Agent(
   use_tools = True,
   show_tool_calls = True,
   debug_mode = os.getenv("AGENT_DEBUG", "false") == 'true',
+  storage = SqlAgentStorage(table_name="session", db_file="db/magicLink.db")
 )
 
 def terminal():

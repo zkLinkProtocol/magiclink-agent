@@ -3,3 +3,4 @@ openai
 phidata
 python-dotenv
 fastapi[standard]
+sqlalchemy
