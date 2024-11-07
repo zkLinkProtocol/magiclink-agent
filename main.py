@@ -49,6 +49,23 @@ def get_popular_nft(chain: str, num: int = 5):
   except:
     return json.dumps({"error": "Currently doesn't support {chain}"})
 
+def get_wallet_balance(chain: str, wallet_address: str):
+  """Use this function to get a list of token balance for specified chain.
+
+  Args:
+    chain (str): The blockchain where you want to query. Ask user if you don't know.
+    wallet_address (str): The wallet address you want to query. Ask user if you don't know.
+
+  Returns:
+    str: JSON string of wallet balance.
+  """
+  try:
+    info = Chains[chain.lower()]
+    resp = okx.req('GET', f"/api/v5/wallet/asset/all-token-balances-by-address?address={wallet_address}&chains={str(info['id'])}")
+    return json.dumps(resp)
+  except:
+    return json.dumps({"error": "Currently doesn't support {chain}"})
+
 def send_token(token: str, amount: str, recipient: str, chain: str):
   """Use this function to send token to recipient.
 
@@ -124,7 +141,7 @@ chatbot = Agent(
   # model = Claude(id = 'claude-3-haiku-20240307'),
   add_history_to_messages = True,
   system_prompt = system_prompt,
-  tools = [get_popular_nft, send_token, swap],
+  tools = [get_popular_nft, get_wallet_balance, send_token, swap],
   use_tools = True,
   show_tool_calls = True,
   debug_mode = os.getenv("AGENT_DEBUG", "false") == 'true',

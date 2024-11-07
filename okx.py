@@ -7,9 +7,10 @@ import json
 class OKX(Client):
   def __init__(self):
     super().__init__(base_url='https://www.okx.com')
-    self.API_ACCESS_KEY = '90fae07d-3fe3-4b23-bc27-afc59285b4aa'
-    self.API_SECRET_KEY = '91DC4BA6E6FF03F2BDAFBD1A18BF8C14'
+    self.API_ACCESS_KEY = 'c2e47c18-1e37-4141-85bb-25894f2ba7e7'
+    self.API_SECRET_KEY = 'EA774247D00620B281456361514BF59A'
     self.PASSPHRASE = '8686Qwe!'
+    self.PROJECT = '3bdbd16edddeb5eb22515dc8b447bea6'
     with open('okx_swap.json') as f:
       self.TOKEN = json.load(f)
   
@@ -24,7 +25,8 @@ class OKX(Client):
       'OK-ACCESS-KEY': self.API_ACCESS_KEY,
       'OK-ACCESS-SIGN': str(sign, 'utf-8'),
       'OK-ACCESS-TIMESTAMP': timestamp,
-      'OK-ACCESS-PASSPHRASE': self.PASSPHRASE
+      'OK-ACCESS-PASSPHRASE': self.PASSPHRASE,
+      'OK-ACCESS-PROJECT': self.PROJECT,
     }
 
   def get_timestamp(self):
