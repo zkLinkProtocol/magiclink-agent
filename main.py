@@ -119,10 +119,14 @@ def swap(token_from: str, token_to: str, amount: str, chain: str):
       fromAddress = info['token'][token_from.upper()]
     else:
       fromAddress = okxInfo[token_from.upper()]['address']
+    if fromAddress == '':
+      fromAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
     if token_to.upper() in info['token']:
       toAddress = info['token'][token_to.upper()]
     else:
       toAddress = okxInfo[token_to.upper()]['address']
+    if toAddress == '':
+      toAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
     param = quote(json.dumps({
       "chainId": chainId,
       "params": {
@@ -179,7 +183,7 @@ app = Playground(agents=[chatbot, twitter_bot]).get_app()
 if __name__ == "__main__":
   # print(get_popular_nft(1))
   # print(send_token('usdc', 100, '0x1234567890123456789012345678901234567890', 'arbitrum'))
-  # print(swap('usdc', 'eth', 100, 'op'))
+  # print(swap('usdc', 'eth', 1000, 'arb'))
   if len(sys.argv) > 1 and sys.argv[1] == 's':
     serve_playground_app("main:app", host = '0.0.0.0')
   else:
