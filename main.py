@@ -23,8 +23,8 @@ def get_popular_nft(chain: str, num: int = 5):
   """Use this function to get popular NFT.
 
   Args:
-    num (str): Number of NFT to return. Defaults to 5.
-    chain (str): Blockchain name. Optional value can be Ethereum, Base, Arbitrum. Ask user if you don't know
+    num (str): The number of NFT to return.
+    chain (str): The blockchain where you buy NFT. Optional value can be Ethereum, Base, Arbitrum. Ask user if you don't know.
 
   Returns:
     str: JSON string of NFT information.
@@ -52,10 +52,10 @@ def send_token(token: str, amount: str, recipient: str, chain: str):
   """Use this function to send token to recipient.
 
   Args:
-    token (str): Token symbol.
-    amount (str): Amount of donation.
-    recipient (str): Address to receive token.
-    chain (str): Blockchain name. Optional value can be Ethereum, Optimism, Base, Arbitrum, zkLink, Linea, Manta, Scroll, BSC. Ask user if you don't know
+    token (str): The symbol of token that you want to send.
+    amount (str): The amount of token that you want to send.
+    recipient (str): The address to receive token.
+    chain (str): The blockchain where the transaction will happen. Optional value can be Ethereum, Optimism, Base, Arbitrum, zkLink, Linea, Manta, Scroll, BSC. Ask user if you don't know
 
   Returns:
     str: JSON string of magicLinks to send token.
@@ -85,7 +85,7 @@ def swap(token_from: str, token_to: str, amount: str, chain: str):
     token_from (str): The symbol of token that you want to swap.
     token_to (str): The symbol of token that you want to swap for.
     amount (str): The amount of token that you want to swap (**token_from**).
-    chain (str): The blockchain where the swap will happen. Optional value can be Ethereum, Optimism, Base, Arbitrum. Ask user if you don't know
+    chain (str): The blockchain where the swap will happen. Optional value can be Ethereum, Optimism, Base, Arbitrum. Ask user if you don't know.
 
   Returns:
     str: JSON string of magicLinks to swap token.
