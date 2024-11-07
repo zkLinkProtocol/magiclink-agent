@@ -74,13 +74,13 @@ def send_token(token: str, amount: str, recipient: str, chain: str = 'Ethereum')
     return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=buy-me-a-coffee'})
 
 def swap(token_from: str, token_to: str, amount: str, chain: str = 'Arbitrum'):
-  """Use this function to swap or buy one token from another token
+  """Use this function to swap or buy one token from another token.
 
   Args:
     token_from (str): The symbol of token that you want to swap.
     token_to (str): The symbol of token that you want to swap for.
     amount (str): The amount of token that you want to swap (**token_from**).
-    chain (str): Blockchain name. Defaults to Arbitrum.
+    chain (str): The blockchain where the swap will happen.
 
   Returns:
     str: JSON string of magicLinks to swap token.
