@@ -23,7 +23,7 @@ def get_popular_nft(chain: str, num: int = 5):
   """Use this function to get popular NFT.
 
   Args:
-    num (str): The number of NFT to return.
+    num (str): The number of NFT to return. Defaults to 5.
     chain (str): The blockchain where you buy NFT. Optional value can be Ethereum, Base, Arbitrum. Ask user if you don't know.
 
   Returns:
@@ -53,8 +53,8 @@ def send_token(token: str, amount: str, recipient: str, chain: str):
 
   Args:
     token (str): The symbol of token that you want to send.
-    amount (str): The amount of token that you want to send.
-    recipient (str): The address to receive token.
+    amount (str): The amount of token that you want to send. Ask user if you don't know.
+    recipient (str): The address to receive token. Ask user if you don't know.
     chain (str): The blockchain where the transaction will happen. Optional value can be Ethereum, Optimism, Base, Arbitrum, zkLink, Linea, Manta, Scroll, BSC. Ask user if you don't know
 
   Returns:
@@ -82,9 +82,9 @@ def swap(token_from: str, token_to: str, amount: str, chain: str):
   """Use this function to swap or buy one token from another token.
 
   Args:
-    token_from (str): The symbol of token that you want to swap.
+    token_from (str): The symbol of token that you want to swap. Ask user if you don't know.
     token_to (str): The symbol of token that you want to swap for.
-    amount (str): The amount of token that you want to swap (**token_from**).
+    amount (str): The amount of token that you want to swap (**token_from**). Ask user if you don't know.
     chain (str): The blockchain where the swap will happen. Optional value can be Ethereum, Optimism, Base, Arbitrum. Ask user if you don't know.
 
   Returns:
