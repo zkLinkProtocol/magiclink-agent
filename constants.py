@@ -6,6 +6,7 @@ Chains = {
       'ETH': '',
     },
     'magiceden_alias': '',
+    'okx_alias': 'Ethereum',
   },
   'optimism': {
     'id': 10,
@@ -13,6 +14,7 @@ Chains = {
     'token': {
       'ETH': '',
     },
+    'okx_alias': 'Optimism',
   },
   'base': {
     'id': 8453,
@@ -21,6 +23,7 @@ Chains = {
       'ETH': '',
     },
     'magiceden_alias': '-base',
+    'okx_alias': 'Base',
   },
   'arbitrum': {
     'id': 42161,
@@ -31,6 +34,7 @@ Chains = {
       'USDC': '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
     },
     'magiceden_alias': '-arbitrum',
+    'okx_alias': 'Arbitrum',
   },
   'nova': {
     'id': 810180,
