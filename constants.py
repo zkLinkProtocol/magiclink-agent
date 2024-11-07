@@ -70,12 +70,12 @@ Chains = {
   },
   'zksync': {
     'id': 324,
-    'action': ['send'],
+    'action': [],
     'magiceden_alias': '-zksync',
   },
   'mantle': {
     'id': 5000,
-    'action': ['send'],
+    'action': [],
   },
   'bsc': {
     'id': 56,

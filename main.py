@@ -11,17 +11,20 @@ from prompt import *
 import httpx
 import typer
 import json
+import os
+import sys
 from urllib.parse import quote
 
 load_dotenv()
 okx = OKX()
+debug_mode = False
 
 def get_popular_nft(chain: str, num: int = 5):
   """Use this function to get popular NFT.
 
   Args:
     num (str): Number of NFT to return. Defaults to 5.
-    chain (str): Blockchain name. Optional value can be Ethereum, Base, Arbitrum.
+    chain (str): Blockchain name. Optional value can be Ethereum, Base, Arbitrum. Ask user if you don't know
 
   Returns:
     str: JSON string of NFT information.
@@ -52,7 +55,7 @@ def send_token(token: str, amount: str, recipient: str, chain: str):
     token (str): Token symbol.
     amount (str): Amount of donation.
     recipient (str): Address to receive token.
-    chain (str): Blockchain name. Optional value can be Ethereum, Optimism, Base, Arbitrum, zkLink, Linea, Manta, Scroll, ZKsync, Mantle, BSC.
+    chain (str): Blockchain name. Optional value can be Ethereum, Optimism, Base, Arbitrum, zkLink, Linea, Manta, Scroll, BSC. Ask user if you don't know
 
   Returns:
     str: JSON string of magicLinks to send token.
@@ -82,7 +85,7 @@ def swap(token_from: str, token_to: str, amount: str, chain: str):
     token_from (str): The symbol of token that you want to swap.
     token_to (str): The symbol of token that you want to swap for.
     amount (str): The amount of token that you want to swap (**token_from**).
-    chain (str): The blockchain where the swap will happen. Optional value can be Ethereum, Optimism, Base, Arbitrum.
+    chain (str): The blockchain where the swap will happen. Optional value can be Ethereum, Optimism, Base, Arbitrum. Ask user if you don't know
 
   Returns:
     str: JSON string of magicLinks to swap token.
@@ -122,7 +125,7 @@ chatbot = Agent(
   tools = [get_popular_nft, send_token, swap],
   use_tools = True,
   show_tool_calls = True,
-  debug_mode = False,
+  debug_mode = os.getenv("AGENT_DEBUG", "false") == 'true',
 )
 
 def terminal():
@@ -144,7 +147,6 @@ if __name__ == "__main__":
   # print(get_popular_nft(1))
   # print(send_token('usdc', 100, '0x1234567890123456789012345678901234567890', 'arbitrum'))
   # print(swap('usdc', 'eth', 100, 'op'))
-  import sys
   if len(sys.argv) > 1 and sys.argv[1] == 's':
     serve_playground_app("main:app", host = '0.0.0.0')
   else:
