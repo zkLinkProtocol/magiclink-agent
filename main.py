@@ -80,7 +80,8 @@ def send_token(token: str, amount: str, recipient: str, chain: str):
     return json.dumps({"error": f"Currently don't support send {token} on {chain}"})
 
 def swap(token_from: str, token_to: str, amount: str, chain: str):
-  """Use this function to swap or buy one token from another token.
+  """Use this function to swap or buy one token from another token. This function doesn't support cross-chain swap. If user specify source chain and destination chain,
+  we should not use this function.
 
   Args:
     token_from (str): The symbol of token that you want to swap. Ask user if you don't know.
