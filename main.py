@@ -6,6 +6,7 @@ from phi.model.openai import OpenAIChat
 from phi.playground import Playground, serve_playground_app
 from rich.prompt import Prompt
 from constants import *
+from okx import OKX
 from prompt import *
 import httpx
 import typer
@@ -13,6 +14,7 @@ import json
 from urllib.parse import quote
 
 load_dotenv()
+okx = OKX()
 
 def get_popular_nft(num: int = 5, chain: str = 'Ethereum'):
   """Use this function to get popular NFT.
@@ -41,7 +43,7 @@ def get_popular_nft(num: int = 5, chain: str = 'Ethereum'):
       })
     return json.dumps(nfts)
   except:
-    return json.dumps({"error": "Failed to get NFT detail through Magic Eden"})
+    return json.dumps({"error": "Failed to retrieve NFT detail from Magic Eden"})
 
 def send_token(token: str, amount: str, recipient: str, chain: str = 'Ethereum'):
   """Use this function to send token to recipient.
@@ -71,7 +73,7 @@ def send_token(token: str, amount: str, recipient: str, chain: str = 'Ethereum')
     }, separators=(',', ':')))
     return json.dumps({'url': f"https://magic.zklink.io/intent/{magicLinkCode['send']}/confirm?params={param}"})
   except:
-    return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=buy-me-a-coffee'})
+    return json.dumps({"error": f"Currently don't support send {token} on {chain}"})
 
 def swap(token_from: str, token_to: str, amount: str, chain: str = 'Arbitrum'):
   """Use this function to swap or buy one token from another token.
@@ -88,10 +90,17 @@ def swap(token_from: str, token_to: str, amount: str, chain: str = 'Arbitrum'):
   try:
     info = Chains[chain.lower()]
     if 'swap' not in info['action']:
-      raise Exception(f'Swap action currently unavailable on {chain}')
+      raise Exception()
     chainId = info['id']
-    fromAddress = info['token'][token_from.upper()]
-    toAddress = info['token'][token_to.upper()]
+    okxInfo = okx.TOKEN[info['okx_alias']]
+    if token_from.upper() in info['token']:
+      fromAddress = info['token'][token_from.upper()]
+    else:
+      fromAddress = okxInfo[token_from.upper()]['address']
+    if token_to.upper() in info['token']:
+      toAddress = info['token'][token_to.upper()]
+    else:
+      toAddress = okxInfo[token_to.upper()]['address']
     param = quote(json.dumps({
       "chainId": chainId,
       "params": {
@@ -102,7 +111,7 @@ def swap(token_from: str, token_to: str, amount: str, chain: str = 'Arbitrum'):
     }, separators=(',', ':')))
     return json.dumps({'url': f"https://magic.zklink.io/intent/{magicLinkCode['swap']}/confirm?params={param}"})
   except:
-    return json.dumps({'url': 'https://zklink.io/dashboard/intent?id=magic-swap'})
+    return json.dumps({"error": f"Currently don't support swap {token_from} and {token_to} on {chain}"})
 
 chatbot = Agent(
   agent_id = 'magicLinkAgent',
@@ -134,7 +143,7 @@ app = Playground(agents=[chatbot]).get_app()
 if __name__ == "__main__":
   # print(get_popular_nft(1))
   # print(send_token('usdc', 100, '0x1234567890123456789012345678901234567890', 'arbitrum'))
-  # print(swap('usdc', 'eth', 100, 'arbitrum'))
+  # print(swap('usdc', 'eth', 100, 'op'))
   import sys
   if len(sys.argv) > 1 and sys.argv[1] == 's':
     serve_playground_app("main:app", host = '0.0.0.0')

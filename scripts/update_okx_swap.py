@@ -10,7 +10,7 @@ for chain in Chains.values():
     info = okx.req('GET', f"/api/v5/dex/aggregator/all-tokens?chainId={chain['id']}")
     for token in info['data']:
       tokens[chain['okx_alias']][token['tokenSymbol'].upper()] = {
-        'address': '' if token['tokenContractAddress'] == '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE' else token['tokenContractAddress'],
+        'address': token['tokenContractAddress'],
         'logo': token['tokenLogoUrl'],
         'decimals': token['decimals'],
       }
