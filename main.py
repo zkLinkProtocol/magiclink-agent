@@ -148,6 +148,19 @@ chatbot = Agent(
   storage = SqlAgentStorage(table_name="session", db_file="db/magicLink.db")
 )
 
+twitter_bot = Agent(
+  agent_id = 'twitter',
+  model = OpenAIChat(id = 'gpt-4o-mini'),
+  # model = Claude(id = 'claude-3-haiku-20240307'),
+  add_history_to_messages = True,
+  system_prompt = system_prompt + '\nYour reply should be concise and clear and no more than 250 characters.',
+  tools = [get_popular_nft, get_wallet_balance, send_token, swap],
+  use_tools = True,
+  show_tool_calls = True,
+  debug_mode = os.getenv("AGENT_DEBUG", "false") == 'true',
+  storage = SqlAgentStorage(table_name="session", db_file="db/magicLink.db")
+)
+
 def terminal():
   session_id = None
   if session_id is None:
@@ -161,7 +174,7 @@ def terminal():
       break
     chatbot.print_response(message)
 
-app = Playground(agents=[chatbot]).get_app()
+app = Playground(agents=[chatbot, twitter_bot]).get_app()
 
 if __name__ == "__main__":
   # print(get_popular_nft(1))
