@@ -62,7 +62,7 @@ def get_wallet_balance(chain: str, wallet_address: str):
   try:
     info = Chains[chain.lower()]
     resp = okx.req('GET', f"/api/v5/wallet/asset/all-token-balances-by-address?address={wallet_address}&chains={str(info['id'])}")
-    return json.dumps(resp)
+    return json.dumps(resp)[:10000]
   except:
     return json.dumps({"error": "Currently doesn't support {chain}"})
 
