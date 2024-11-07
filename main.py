@@ -16,12 +16,12 @@ from urllib.parse import quote
 load_dotenv()
 okx = OKX()
 
-def get_popular_nft(num: int = 5, chain: str = 'Ethereum'):
+def get_popular_nft(chain: str, num: int = 5):
   """Use this function to get popular NFT.
 
   Args:
     num (str): Number of NFT to return. Defaults to 5.
-    chain (str): Blockchain name. Defaults to Ethereum.
+    chain (str): Blockchain name. Optional value can be Ethereum, Base, Arbitrum.
 
   Returns:
     str: JSON string of NFT information.
@@ -43,16 +43,16 @@ def get_popular_nft(num: int = 5, chain: str = 'Ethereum'):
       })
     return json.dumps(nfts)
   except:
-    return json.dumps({"error": "Failed to retrieve NFT detail from Magic Eden"})
+    return json.dumps({"error": "Currently doesn't support {chain}"})
 
-def send_token(token: str, amount: str, recipient: str, chain: str = 'Ethereum'):
+def send_token(token: str, amount: str, recipient: str, chain: str):
   """Use this function to send token to recipient.
 
   Args:
     token (str): Token symbol.
     amount (str): Amount of donation.
     recipient (str): Address to receive token.
-    chain (str): Blockchain name. Defaults to Ethereum.
+    chain (str): Blockchain name. Optional value can be Ethereum, Optimism, Base, Arbitrum, zkLink, Linea, Manta, Scroll, ZKsync, Mantle, BSC.
 
   Returns:
     str: JSON string of magicLinks to send token.
@@ -75,14 +75,14 @@ def send_token(token: str, amount: str, recipient: str, chain: str = 'Ethereum')
   except:
     return json.dumps({"error": f"Currently don't support send {token} on {chain}"})
 
-def swap(token_from: str, token_to: str, amount: str, chain: str = 'Arbitrum'):
+def swap(token_from: str, token_to: str, amount: str, chain: str):
   """Use this function to swap or buy one token from another token.
 
   Args:
     token_from (str): The symbol of token that you want to swap.
     token_to (str): The symbol of token that you want to swap for.
     amount (str): The amount of token that you want to swap (**token_from**).
-    chain (str): The blockchain where the swap will happen.
+    chain (str): The blockchain where the swap will happen. Optional value can be Ethereum, Optimism, Base, Arbitrum.
 
   Returns:
     str: JSON string of magicLinks to swap token.
