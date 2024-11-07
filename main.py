@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from phi.agent import Agent
+from phi.tools.duckduckgo import DuckDuckGo
 # from phi.tools.googlesearch import GoogleSearch
 # from phi.model.anthropic import Claude
 from phi.model.openai import OpenAIChat
@@ -158,7 +159,7 @@ twitter_bot = Agent(
   # model = Claude(id = 'claude-3-haiku-20240307'),
   add_history_to_messages = True,
   system_prompt = system_prompt + '\nYour reply should be concise and clear and no more than 250 characters.',
-  tools = [get_popular_nft, get_wallet_balance, send_token, swap],
+  tools = [get_popular_nft, get_wallet_balance, send_token, swap, DuckDuckGo()],
   use_tools = True,
   show_tool_calls = True,
   debug_mode = os.getenv("AGENT_DEBUG", "false") == 'true',
