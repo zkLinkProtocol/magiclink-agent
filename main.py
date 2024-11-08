@@ -68,7 +68,7 @@ def get_wallet_balance(chain: str, wallet_address: str):
     return json.dumps({"error": "Currently doesn't support {chain}"})
 
 def send_token(token: str, amount: str, recipient: str, chain: str):
-  """Use this function to send token to recipient.
+  """Use this function to send token to recipient. This function doesn't support buy tokens.
 
   Args:
     token (str): The symbol of token that you want to send.
