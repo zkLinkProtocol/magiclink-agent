@@ -15,7 +15,7 @@ class OKX(Client):
       self.TOKEN = json.load(f)
   
   def sign(self, message):
-    mac = hmac.new(bytes(self.API_SECRET_KEY), bytes(message), digestmod='sha256')
+    mac = hmac.new(bytes(self.API_SECRET_KEY, encoding='utf8'), bytes(message, encoding='utf-8'), digestmod='sha256')
     d = mac.digest()
     return base64.b64encode(d)
 
