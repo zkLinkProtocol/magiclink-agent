@@ -1,7 +1,6 @@
 from dotenv import load_dotenv
 from phi.agent import Agent
 from phi.tools.duckduckgo import DuckDuckGo
-# from phi.tools.googlesearch import GoogleSearch
 # from phi.model.anthropic import Claude
 from phi.model.openai import OpenAIChat
 from phi.playground import Playground, serve_playground_app
@@ -12,10 +11,10 @@ from okx import OKX
 from prompt import *
 import httpx
 import typer
+import base64
 import json
 import os
 import sys
-from urllib.parse import quote
 
 load_dotenv()
 okx = OKX()
@@ -91,7 +90,7 @@ def send_token(token: str, amount: str, recipient: str, chain: str):
     chain (str): The blockchain where the transaction will happen. Optional value can be Ethereum, Optimism, Base, Arbitrum, zkLink, Linea, Manta, Scroll, BSC. Ask user if you don't know
 
   Returns:
-    str: JSON string of magicLinks to send token.
+    str: url string of magicLinks to send token.
   """
   try:
     info = Chains[chain.lower()]
@@ -99,15 +98,15 @@ def send_token(token: str, amount: str, recipient: str, chain: str):
       raise Exception(f'Send action currently unavailable on {chain}')
     chainId = info['id']
     tokenAddress = info['token'][token.upper()]
-    param = quote(json.dumps({
+    param = base64.urlsafe_b64encode(json.dumps({
       "chainId": chainId,
       "params": {
         "token": tokenAddress,
         "value": amount,
         "recipient": recipient,
       }
-    }, separators=(',', ':')))
-    return json.dumps({'url': f"https://magic.zklink.io/intent/{magicLinkCode['send']}/confirm?params={param}"})
+    }, separators=(',', ':')).encode()).decode()
+    return f"https://magic.zklink.io/intent/{magicLinkCode['send']}/confirm?params={param}"
   except:
     return json.dumps({"error": f"Currently don't support send {token} on {chain}"})
 
@@ -124,7 +123,7 @@ def swap(token_from: str, token_to: str, amount_from: str, chain: str):
     chain (str): The blockchain where the swap will happen. Optional value can be Ethereum, Optimism, Base, Arbitrum. Ask user if you don't know.
 
   Returns:
-    str: JSON string of magicLinks to swap token.
+    str: url string of magicLinks to swap token.
   """
   try:
     info = Chains[chain.lower()]
@@ -144,15 +143,15 @@ def swap(token_from: str, token_to: str, amount_from: str, chain: str):
       toAddress = okxInfo[token_to.upper()]['address']
     if toAddress == '':
       toAddress = '0x0000000000000000000000000000000000000000'
-    param = quote(json.dumps({
+    param = base64.urlsafe_b64encode(json.dumps({
       "chainId": chainId,
       "params": {
         "amountToBuy": amount_from,
         "tokenFrom": fromAddress,
         "tokenTo": toAddress,
       }
-    }, separators=(',', ':')))
-    return json.dumps({'url': f"https://magic.zklink.io/intent/{magicLinkCode['swap']}/confirm?params={param}"})
+    }, separators=(',', ':')).encode()).decode()
+    return f"https://magic.zklink.io/intent/{magicLinkCode['swap']}/confirm?params={param}"
   except:
     return json.dumps({"error": f"Currently don't support swap {token_from} and {token_to} on {chain}"})
 
