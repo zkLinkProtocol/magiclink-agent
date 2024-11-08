@@ -60,22 +60,7 @@ def get_token_price(token: str):
     str: JSON string of token price.
   """
   try:
-    if token.upper() in ['BTC', 'BITCOIN']:
-      chain = '0'
-      tokenAddress = ''
-    elif token.upper() == 'SOL':
-      chain = '501'
-      tokenAddress = ''
-    elif token.upper() == 'SUI':
-      chain = '784'
-      tokenAddress = ''
-    else:
-      chain = '1'
-      tokenAddress = okx.TOKEN['Ethereum'][token.upper()]['address']
-    return json.dumps(okx.req('POST', '/api/v5/wallet/token/current-price', [{
-      'chainIndex': chain,
-      'tokenAddress': tokenAddress,
-    }]))
+    return json.dumps(okx.req('GET', f"/api/v5/market/ticker?instId={token.upper()}-USDT"))
   except:
     return json.dumps({"error": "Failed to retrive price for {token}"})
 
