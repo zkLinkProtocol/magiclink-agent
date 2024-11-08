@@ -97,14 +97,15 @@ def send_token(token: str, amount: str, recipient: str, chain: str):
   except:
     return json.dumps({"error": f"Currently don't support send {token} on {chain}"})
 
-def swap(token_from: str, token_to: str, amount: str, chain: str):
+def swap(token_from: str, token_to: str, amount_from: str, chain: str):
   """Use this function to swap or buy one token from another token. This function doesn't support cross-chain swap. If user specify source chain and destination chain,
   we should not use this function.
+  This function doesn't support set `amount_to` (amount of token_to). This method does not support setting amount_to. If the user gives amount_to, please inform them that this function does not support it
 
   Args:
     token_from (str): The symbol of token that you want to swap. Ask user if you don't know.
     token_to (str): The symbol of token that you want to swap for.
-    amount (str): The amount of token that you want to swap (**token_from**). Ask user if you don't know.
+    amount_from (str): The amount of token (token_from) that you want to swap. Ask user if you don't know.
     chain (str): The blockchain where the swap will happen. Optional value can be Ethereum, Optimism, Base, Arbitrum. Ask user if you don't know.
 
   Returns:
