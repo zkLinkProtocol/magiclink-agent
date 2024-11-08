@@ -143,7 +143,7 @@ def swap(token_from: str, token_to: str, amount_from: str, chain: str):
 
 chatbot = Agent(
   agent_id = 'magicLinkAgent',
-  model = OpenAIChat(id = 'gpt-4o-mini'),
+  model = OpenAIChat(id = 'gpt-4o-mini', temperature = 0.0),
   # model = Claude(id = 'claude-3-haiku-20240307'),
   add_history_to_messages = True,
   num_history_responses = 5,
@@ -157,11 +157,11 @@ chatbot = Agent(
 
 twitter_bot = Agent(
   agent_id = 'twitter',
-  model = OpenAIChat(id = 'gpt-4o-mini'),
+  model = OpenAIChat(id = 'gpt-4o-mini', temperature = 0.0),
   # model = Claude(id = 'claude-3-haiku-20240307'),
   add_history_to_messages = True,
   num_history_responses = 5,
-  system_prompt = system_prompt + '\nYour reply should be concise and clear and no more than 250 characters.',
+  system_prompt = system_prompt + '\nYour reply should be no more than 250 characters.',
   tools = [get_popular_nft, get_wallet_balance, send_token, swap, DuckDuckGo()],
   use_tools = True,
   show_tool_calls = True,
