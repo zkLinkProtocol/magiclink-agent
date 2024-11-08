@@ -162,6 +162,7 @@ chatbot = Agent(
   add_history_to_messages = True,
   num_history_responses = 5,
   system_prompt = system_prompt,
+  markdown = False,
   tools = [get_popular_nft, get_wallet_balance, send_token, swap, get_token_price, DuckDuckGo()],
   use_tools = True,
   show_tool_calls = True,
