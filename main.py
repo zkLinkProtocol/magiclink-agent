@@ -122,13 +122,13 @@ def swap(token_from: str, token_to: str, amount_from: str, chain: str):
     else:
       fromAddress = okxInfo[token_from.upper()]['address']
     if fromAddress == '':
-      fromAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+      fromAddress = '0x0000000000000000000000000000000000000000'
     if token_to.upper() in info['token']:
       toAddress = info['token'][token_to.upper()]
     else:
       toAddress = okxInfo[token_to.upper()]['address']
     if toAddress == '':
-      toAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+      toAddress = '0x0000000000000000000000000000000000000000'
     param = quote(json.dumps({
       "chainId": chainId,
       "params": {

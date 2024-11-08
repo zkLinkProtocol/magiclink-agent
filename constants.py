@@ -3,7 +3,7 @@ Chains = {
     'id': 1,
     'action': ['send', 'swap'],
     'token': {
-      'ETH': '',
+      'ETH': '0x0000000000000000000000000000000000000000',
     },
     'magiceden_alias': '',
     'okx_alias': 'Ethereum',
@@ -12,7 +12,7 @@ Chains = {
     'id': 10,
     'action': ['send', 'swap'],
     'token': {
-      'ETH': '',
+      'ETH': '0x0000000000000000000000000000000000000000',
     },
     'okx_alias': 'Optimism',
   },
@@ -20,7 +20,7 @@ Chains = {
     'id': 8453,
     'action': ['send', 'swap'],
     'token': {
-      'ETH': '',
+      'ETH': '0x0000000000000000000000000000000000000000',
     },
     'magiceden_alias': '-base',
     'okx_alias': 'Base',
@@ -29,7 +29,7 @@ Chains = {
     'id': 42161,
     'action': ['send', 'swap'],
     'token': {
-      'ETH': '',
+      'ETH': '0x0000000000000000000000000000000000000000',
       'USDT': '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
       'USDC': '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
     },
@@ -40,7 +40,7 @@ Chains = {
     'id': 810180,
     'action': ['send'],
     'token': {
-      'ETH': '',
+      'ETH': '0x0000000000000000000000000000000000000000',
       'USDT': '0x2F8A25ac62179B31D62D7F80884AE57464699059',
       'USDC': '0x1a1A3b2ff016332e866787B311fcB63928464509',
     },
@@ -49,7 +49,7 @@ Chains = {
     'id': 59144,
     'action': ['send'],
     'token': {
-      'ETH': '',
+      'ETH': '0x0000000000000000000000000000000000000000',
     },
     'magiceden_alias': '-linea',
   },
@@ -57,14 +57,14 @@ Chains = {
     'id': 169,
     'action': ['send'],
     'token': {
-      'ETH': '',
+      'ETH': '0x0000000000000000000000000000000000000000',
     },
   },
   'scroll': {
     'id': 534352,
     'action': ['send'],
     'token': {
-      'ETH': '',
+      'ETH': '0x0000000000000000000000000000000000000000',
     },
     'magiceden_alias': '-scroll',
   },
@@ -81,7 +81,7 @@ Chains = {
     'id': 56,
     'action': ['send'],
     'token': {
-      'BNB': '',
+      'BNB': '0x0000000000000000000000000000000000000000',
     },
     'magiceden_alias': '-bsc',
   },
