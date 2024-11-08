@@ -113,13 +113,13 @@ def send_token(token: str, amount: str, recipient: str, chain: str):
 def swap(token_from: str, token_to: str, amount_from: str, chain: str):
   """Use this function to swap or buy one ERC20 token from another ERC20 token. This function doesn't support cross-chain swap. If user specify source chain and destination chain,
   we should not use this function.
-  This function doesn't support set `amount_to` (amount of token_to). This method does not support setting amount_to. If the user gives amount_to, please inform them that this function does not support it
+  This function doesn't support set `amount_to` (amount of token_to). If the user gives amount_to, please inform them that this function does not support specify target amount
   This function only support swap between ERC20 token or ETH. BTC, BNB, etc are not supported.
 
   Args:
     token_from (str): The symbol of ERC20 token that you want to swap. Ask user if you don't know.
     token_to (str): The symbol of ERC20 token that you want to swap for.
-    amount_from (str): The amount of token (token_from) that you want to swap. Ask user if you don't know.
+    amount_from (str): The amount of token (token_from) that you want to swap.
     chain (str): The blockchain where the swap will happen. Optional value can be Ethereum, Optimism, Base, Arbitrum. Ask user if you don't know.
 
   Returns:
