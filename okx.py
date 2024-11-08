@@ -50,5 +50,4 @@ class OKX(Client):
 
 if __name__ == "__main__":
   okx = OKX()
-  print(okx.TOKEN)
   print(json.dumps(okx.req('GET', '/api/v5/dex/aggregator/supported/chain')))

@@ -50,6 +50,35 @@ def get_popular_nft(chain: str, num: int = 5):
   except:
     return json.dumps({"error": "Currently doesn't support {chain}"})
 
+def get_token_price(token: str):
+  """Use this function to get real time token price.
+
+  Args:
+    token (str): The token you want to query.
+
+  Returns:
+    str: JSON string of token price.
+  """
+  try:
+    if token.upper() in ['BTC', 'BITCOIN']:
+      chain = '0'
+      tokenAddress = ''
+    elif token.upper() == 'SOL':
+      chain = '501'
+      tokenAddress = ''
+    elif token.upper() == 'SUI':
+      chain = '784'
+      tokenAddress = ''
+    else:
+      chain = '1'
+      tokenAddress = okx.TOKEN['Ethereum'][token.upper()]['address']
+    return json.dumps(okx.req('POST', '/api/v5/wallet/token/current-price', [{
+      'chainIndex': chain,
+      'tokenAddress': tokenAddress,
+    }]))
+  except:
+    return json.dumps({"error": "Failed to retrive price for {token}"})
+
 def get_wallet_balance(chain: str, wallet_address: str):
   """Use this function to get a list of token balance for specified chain.
 
@@ -149,25 +178,18 @@ chatbot = Agent(
   add_history_to_messages = True,
   num_history_responses = 5,
   system_prompt = system_prompt,
-  tools = [get_popular_nft, get_wallet_balance, send_token, swap],
+  tools = [get_popular_nft, get_wallet_balance, send_token, swap, get_token_price, DuckDuckGo()],
   use_tools = True,
   show_tool_calls = True,
   debug_mode = os.getenv("AGENT_DEBUG", "false") == 'true',
   storage = SqlAgentStorage(table_name="session", db_file="db/magicLink.db")
 )
 
-twitter_bot = Agent(
-  agent_id = 'twitter',
-  model = OpenAIChat(id = 'gpt-4o-mini', temperature = 0.0),
-  # model = Claude(id = 'claude-3-haiku-20240307'),
-  add_history_to_messages = True,
-  num_history_responses = 5,
-  system_prompt = system_prompt + '\nYour reply should be no more than 250 characters.',
-  tools = [get_popular_nft, get_wallet_balance, send_token, swap, DuckDuckGo()],
-  use_tools = True,
-  show_tool_calls = True,
-  debug_mode = os.getenv("AGENT_DEBUG", "false") == 'true',
-  storage = SqlAgentStorage(table_name="session", db_file="db/magicLink.db")
+twitter_bot = chatbot.deep_copy(
+  update = {
+    'agent_id': 'twitter',
+    'system_prompt': system_prompt + '\nYour reply should be no more than 250 characters.',
+  }
 )
 
 def terminal():
@@ -189,6 +211,8 @@ if __name__ == "__main__":
   # print(get_popular_nft(1))
   # print(send_token('usdc', 100, '0x1234567890123456789012345678901234567890', 'arbitrum'))
   # print(swap('usdc', 'eth', 1000, 'arb'))
+  # print(get_token_price('sol'))
+
   if len(sys.argv) > 1 and sys.argv[1] == 's':
     serve_playground_app("main:app", host = '0.0.0.0')
   else:
