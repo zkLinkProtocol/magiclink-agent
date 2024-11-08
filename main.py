@@ -132,7 +132,7 @@ def swap(token_from: str, token_to: str, amount_from: str, chain: str):
     param = quote(json.dumps({
       "chainId": chainId,
       "params": {
-        "amountToBuy": amount,
+        "amountToBuy": amount_from,
         "tokenFrom": fromAddress,
         "tokenTo": toAddress,
       }
