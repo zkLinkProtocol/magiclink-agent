@@ -261,7 +261,8 @@ def create_coin(name: str, icon_url: str, description: str, symbol: str):
     str: url string of magicLinks to create meme coin.
   """
   if symbol == '':
-    symbol = name.upper().replace(' ', '')
+    symbol = name
+  symbol = name.upper().replace(' ', '')
   try:
     param = base64.urlsafe_b64encode(json.dumps({
       "chainId": 8453,
