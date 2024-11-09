@@ -51,7 +51,7 @@ def get_popular_nft(chain: str, num: int = 5):
     return json.dumps({"error": f"Currently doesn't support {chain}"})
 
 def get_popular_token():
-  """Use this function to get popular token. Tell user their popular reason.
+  """Use this function to get popular token. Also introduce their popular reason.
 
   Returns:
     str: JSON string of token information.
@@ -188,7 +188,8 @@ def swap(token_from: str, token_to: str, amount_from: str, chain: str):
 
 chatbot = Agent(
   agent_id = 'magicLinkAgent',
-  model = OpenAIChat(id = 'gpt-4o-mini', temperature = 0.0),
+  model = OpenAIChat(id = 'gpt-4o-mini-2024-07-18', temperature = 0.0),
+  # model = OpenAIChat(id = 'gpt-4o-2024-08-06', temperature = 0.0),
   # model = Claude(id = 'claude-3-haiku-20240307'),
   add_history_to_messages = True,
   num_history_responses = 5,
@@ -208,6 +209,14 @@ twitter_bot = chatbot.deep_copy(
   }
 )
 
+debug_bot = chatbot.deep_copy(
+  update = {
+    'agent_id': 'debug',
+    'system_prompt': '',
+    'model': OpenAIChat(id = 'gpt-4o-2024-08-06')
+  }
+)
+
 def terminal():
   session_id = None
   if session_id is None:
@@ -221,7 +230,7 @@ def terminal():
       break
     chatbot.print_response(message)
 
-app = Playground(agents=[chatbot, twitter_bot]).get_app()
+app = Playground(agents=[chatbot, twitter_bot, debug_bot]).get_app()
 
 if __name__ == "__main__":
   if len(sys.argv) > 1 and sys.argv[1] == 's':
