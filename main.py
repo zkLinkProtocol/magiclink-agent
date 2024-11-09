@@ -51,7 +51,7 @@ def get_popular_nft(chain: str, num: int = 5):
     return json.dumps({"error": f"Currently doesn't support {chain}"})
 
 def get_popular_token():
-  """Use this function to get popular token grouped by trend category.
+  """Use this function to get popular token. Tell user their popular reason.
 
   Returns:
     str: JSON string of token information.
@@ -72,7 +72,7 @@ def get_popular_token():
           'price': choosing_coins[j]['current_price'],
         })
       coin_trend = {
-        'category': categories[i]['name'],
+        'popular_reason': categories[i]['name'],
         'coin': coin
       }
       result.append(coin_trend)
