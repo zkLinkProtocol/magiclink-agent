@@ -1,8 +1,7 @@
 from dotenv import load_dotenv
 from phi.agent import Agent
-from phi.tools.duckduckgo import DuckDuckGo
-# from phi.model.anthropic import Claude
 from phi.model.openai import OpenAIChat
+from phi.tools.duckduckgo import DuckDuckGo
 from phi.playground import Playground, serve_playground_app
 from phi.storage.agent.sqlite import SqlAgentStorage
 from rich.prompt import Prompt
@@ -189,8 +188,6 @@ def swap(token_from: str, token_to: str, amount_from: str, chain: str):
 chatbot = Agent(
   agent_id = 'magicLinkAgent',
   model = OpenAIChat(id = 'gpt-4o-mini-2024-07-18', temperature = 0.0),
-  # model = OpenAIChat(id = 'gpt-4o-2024-08-06', temperature = 0.0),
-  # model = Claude(id = 'claude-3-haiku-20240307'),
   add_history_to_messages = True,
   num_history_responses = 5,
   system_prompt = system_prompt,
@@ -210,10 +207,16 @@ twitter_bot = chatbot.deep_copy(
 )
 
 debug_bot = chatbot.deep_copy(
+  # from phi.model.anthropic import Claude
+  # model = OpenAIChat(id = 'gpt-4o-2024-08-06'),
+  # model = Claude(id = 'claude-3-haiku-20240307'),
+  # model = Claude(id = 'claude-3-5-haiku-20241022'),
+  # model = Claude(id = 'claude-3-5-sonnet-20241022'),
+  model = OpenAIChat(id = 'gpt-4o-mini-2024-07-18', temperature = 0.0)
   update = {
     'agent_id': 'debug',
     'system_prompt': '',
-    'model': OpenAIChat(id = 'gpt-4o-2024-08-06')
+    'model': model
   }
 )
 
