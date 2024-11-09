@@ -14,6 +14,7 @@ import typer
 import base64
 import json
 import os
+import random
 import sys
 
 load_dotenv()
@@ -47,7 +48,37 @@ def get_popular_nft(chain: str, num: int = 5):
       })
     return json.dumps(nfts)
   except:
-    return json.dumps({"error": "Currently doesn't support {chain}"})
+    return json.dumps({"error": f"Currently doesn't support {chain}"})
+
+def get_popular_token():
+  """Use this function to get popular token grouped by trend category.
+
+  Returns:
+    str: JSON string of token information.
+  """
+  try:
+    trend_resp = httpx.get('https://api.coingecko.com/api/v3/search/trending')
+    trend = trend_resp.json()
+    categories = random.sample(trend['categories'], 3)
+    result = []
+    for i in range(0, 3):
+      coin_resp = httpx.get(f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&page=1&per_page=10&category={categories[i]['slug']}")
+      coins = coin_resp.json()
+      choosing_coins = random.sample(coins, 3)
+      coin = []
+      for j in range(0, 3):
+        coin.append({
+          'name': choosing_coins[j]['name'],
+          'price': choosing_coins[j]['current_price'],
+        })
+      coin_trend = {
+        'category': categories[i]['name'],
+        'coin': coin
+      }
+      result.append(coin_trend)
+    return json.dumps(result)
+  except:
+    return json.dumps({"error": "Failed to retrive token trend"})
 
 def get_token_price(token: str):
   """Use this function to get real time token price.
@@ -61,7 +92,7 @@ def get_token_price(token: str):
   try:
     return json.dumps(okx.req('GET', f"/api/v5/market/ticker?instId={token.upper()}-USDT"))
   except:
-    return json.dumps({"error": "Failed to retrive price for {token}"})
+    return json.dumps({"error": f"Failed to retrive price for {token}"})
 
 def get_wallet_balance(chain: str, wallet_address: str):
   """Use this function to get a list of token balance for specified chain.
@@ -78,7 +109,7 @@ def get_wallet_balance(chain: str, wallet_address: str):
     resp = okx.req('GET', f"/api/v5/wallet/asset/all-token-balances-by-address?address={wallet_address}&chains={str(info['id'])}")
     return json.dumps(resp)[:10000]
   except:
-    return json.dumps({"error": "Currently doesn't support {chain}"})
+    return json.dumps({"error": f"Currently doesn't support {chain}"})
 
 def send_token(token: str, amount: str, recipient: str, chain: str):
   """Use this function to send token to recipient. This function doesn't support buy tokens.
@@ -163,7 +194,7 @@ chatbot = Agent(
   num_history_responses = 5,
   system_prompt = system_prompt,
   markdown = False,
-  tools = [get_popular_nft, get_wallet_balance, send_token, swap, get_token_price, DuckDuckGo()],
+  tools = [get_popular_nft, get_popular_token, get_wallet_balance, send_token, swap, get_token_price, DuckDuckGo()],
   use_tools = True,
   show_tool_calls = True,
   debug_mode = os.getenv("AGENT_DEBUG", "false") == 'true',
@@ -193,11 +224,6 @@ def terminal():
 app = Playground(agents=[chatbot, twitter_bot]).get_app()
 
 if __name__ == "__main__":
-  # print(get_popular_nft(1))
-  # print(send_token('usdc', 100, '0x1234567890123456789012345678901234567890', 'arbitrum'))
-  # print(swap('usdc', 'eth', 1000, 'arb'))
-  # print(get_token_price('sol'))
-
   if len(sys.argv) > 1 and sys.argv[1] == 's':
     serve_playground_app("main:app", host = '0.0.0.0')
   else:
