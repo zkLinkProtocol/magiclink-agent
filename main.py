@@ -255,7 +255,7 @@ def create_coin(name: str, icon_url: str, description: str, symbol: str):
     name (str): The full name of meme coin.
     icon_url (str): The icon image url of meme coin. Ask user if you don't know.
     description (str): The description of meme coin. Auto generate something if you don't know.
-    symbol (str): The symbol of meme coin. Default value is as same as name. 
+    symbol (str): The symbol of meme coin. Default value is as same as uppercase name. 
 
   Returns:
     str: url string of magicLinks to create meme coin.
