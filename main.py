@@ -248,6 +248,34 @@ def swap(token_from: str, token_to: str, amount_from: str, chain: str):
   except:
     return json.dumps({"error": f"Currently don't support swap {token_from} and {token_to} on {chain}"})
 
+def create_coin(name: str, icon_url: str, description: str, symbol: str):
+  """Use this function to create new meme coin. Inform user that currently you only support create coin on Base chain.
+
+  Args:
+    name (str): The full name of meme coin.
+    icon_url (str): The icon image url of meme coin. Ask user if you don't know.
+    description (str): The description of meme coin. Auto generate something if you don't know.
+    symbol (str): The symbol of meme coin. Default value is as same as name. 
+
+  Returns:
+    str: url string of magicLinks to create meme coin.
+  """
+  if symbol == '':
+    symbol = name.upper().replace(' ', '')
+  try:
+    param = base64.urlsafe_b64encode(json.dumps({
+      "chainId": 8453,
+      "params": {
+        "coinName": name,
+        "coinSymbol": symbol,
+        "coinIconUrl": icon_url,
+        "coinDescription": description,
+      }
+    }, separators=(',', ':')).encode()).decode()
+    return f"https://magic.zklink.io/intent/{magicLinkCode['dxfun']}/confirm?params={param}"
+  except:
+    return json.dumps({"error": f"Failed to generate transaction to create coin"})
+
 chatbot = Agent(
   agent_id = 'magicLinkAgent',
   model = OpenAIChat(id = 'gpt-4o-mini-2024-07-18', temperature = 0.0),
@@ -255,7 +283,18 @@ chatbot = Agent(
   num_history_responses = 5,
   system_prompt = system_prompt,
   markdown = False,
-  tools = [get_popular_token, get_wallet_balance, send_token, swap, get_token_price, get_nft_info, buy_nft, get_popular_nft, DuckDuckGo()],
+  tools = [
+    get_popular_token,
+    get_wallet_balance,
+    send_token,
+    swap,
+    get_token_price,
+    get_nft_info,
+    buy_nft,
+    get_popular_nft,
+    create_coin,
+    DuckDuckGo(),
+  ],
   use_tools = True,
   show_tool_calls = True,
   debug_mode = os.getenv("AGENT_DEBUG", "false") == 'true',

@@ -102,4 +102,5 @@ magicLinkCode = {
   'send': 'WqL5jFAm',
   'swap': '1se4O1TV',
   'nft': 'rD7pPx8q',
+  'dxfun': 'wpgDP6DU',
 }
