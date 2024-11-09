@@ -25,7 +25,7 @@ def get_popular_nft(chain: str, num: int = 5):
 
   Args:
     num (str): The number of NFT to return. Defaults to 5.
-    chain (str): The blockchain where you buy NFT. Optional value can be Ethereum, Base, Arbitrum. Ask user if you don't know.
+    chain (str): The blockchain where you buy NFT. Optional value can be Ethereum, Base, Optimism, Arbitrum, BSC, Linea, Scroll, ZkSync. Ask user if you don't know.
 
   Returns:
     str: JSON string of NFT information.
@@ -36,9 +36,12 @@ def get_popular_nft(chain: str, num: int = 5):
     nft_info = resp.json()
     nfts = []
     for info in nft_info['collections']:
-      floorAsk = info['floorAsk']
-      floorPrice = floorAsk['price']['amount']['decimal']
-      priceSymbol = floorAsk['price']['currency']['symbol']
+      try:
+        floorAsk = info['floorAsk']
+        floorPrice = floorAsk['price']['amount']['decimal']
+        priceSymbol = floorAsk['price']['currency']['symbol']
+      except:
+        continue
       nfts.append({
         'name': info['name'],
         'price': f'{floorPrice} {priceSymbol}',
@@ -48,6 +51,66 @@ def get_popular_nft(chain: str, num: int = 5):
     return json.dumps(nfts)
   except:
     return json.dumps({"error": f"Currently doesn't support {chain}"})
+
+def get_nft_info(chain: str, name: str):
+  """Use this function to get NFT information such as contract address, and price.
+
+  Args:
+    chain (str): The blockchain where you buy NFT. Optional value can be Ethereum, Base, Optimism, Arbitrum, BSC, Linea, Scroll, ZkSync. Ask user if you don't know.
+    name (str): The nft name where you buy NFT. Ask user if you don't know.
+
+  Returns:
+    str: JSON string of NFT information.
+  """
+  try:
+    info = Chains[chain.lower()]
+    resp = httpx.get(f'https://api{info["magiceden_alias"]}.reservoir.tools/collections/v7?limit=7&sortBy=7DayVolume&name={name}')
+    nft_info = resp.json()
+    nfts = []
+    for info in nft_info['collections']:
+      try:
+        floorAsk = info['floorAsk']
+        floorPrice = floorAsk['price']['amount']['decimal']
+        priceSymbol = floorAsk['price']['currency']['symbol']
+      except:
+        continue
+      nfts.append({
+        'name': info['name'],
+        'price': f'{floorPrice} {priceSymbol}',
+        'image': info['image'],
+        'contract': info['id'],
+      })
+    return json.dumps(nfts)
+  except:
+    return json.dumps({"error": f"Currently doesn't support {chain}"})
+
+def buy_nft(chain: str, address: str, quantity: int = 1):
+  """Use this function to generate links to buy NFT.
+
+  Args:
+    chain (str): The blockchain where you buy NFT. Optional value can be Ethereum, Base, Optimism, Arbitrum, BSC, Linea, Scroll, ZkSync. Ask user if you don't know.
+    address (str): The NFT address. Ask user or call ***get_nft_info*** if you don't know.
+    quantity (int): Number of NFT to buy. Defaults to 1.
+
+  Returns:
+    str: url string of magicLinks to buy nft.
+  """
+  try:
+    info = Chains[chain.lower()]
+    if 'nft' not in info['action']:
+      raise Exception(f'Buy NFT currently unavailable on {chain}')
+    chainId = info['id']
+    param = base64.urlsafe_b64encode(json.dumps({
+      "chainId": chainId,
+      "params": {
+        "queryType": 'contract',
+        "queryValue": address,
+        "quantity": str(quantity),
+      }
+    }, separators=(',', ':')).encode()).decode()
+    return f"https://magic.zklink.io/intent/{magicLinkCode['nft']}/confirm?params={param}"
+  except:
+    return json.dumps({"error": f"Failed to generate transaction to buy NFT"})
 
 def get_popular_token():
   """Use this function to get popular token. Also introduce their popular reason.
@@ -192,7 +255,7 @@ chatbot = Agent(
   num_history_responses = 5,
   system_prompt = system_prompt,
   markdown = False,
-  tools = [get_popular_nft, get_popular_token, get_wallet_balance, send_token, swap, get_token_price, DuckDuckGo()],
+  tools = [get_popular_token, get_wallet_balance, send_token, swap, get_token_price, get_nft_info, buy_nft, get_popular_nft, DuckDuckGo()],
   use_tools = True,
   show_tool_calls = True,
   debug_mode = os.getenv("AGENT_DEBUG", "false") == 'true',

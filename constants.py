@@ -1,7 +1,7 @@
 Chains = {
   'ethereum': {
     'id': 1,
-    'action': ['send', 'swap'],
+    'action': ['send', 'swap', 'nft'],
     'token': {
       'ETH': '0x0000000000000000000000000000000000000000',
     },
@@ -10,15 +10,16 @@ Chains = {
   },
   'optimism': {
     'id': 10,
-    'action': ['send', 'swap'],
+    'action': ['send', 'swap', 'nft'],
     'token': {
       'ETH': '0x0000000000000000000000000000000000000000',
     },
+    'magiceden_alias': '-optimism',
     'okx_alias': 'Optimism',
   },
   'base': {
     'id': 8453,
-    'action': ['send', 'swap'],
+    'action': ['send', 'swap', 'nft'],
     'token': {
       'ETH': '0x0000000000000000000000000000000000000000',
     },
@@ -27,7 +28,7 @@ Chains = {
   },
   'arbitrum': {
     'id': 42161,
-    'action': ['send', 'swap'],
+    'action': ['send', 'swap', 'nft'],
     'token': {
       'ETH': '0x0000000000000000000000000000000000000000',
       'USDT': '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
@@ -47,7 +48,7 @@ Chains = {
   },
   'linea': {
     'id': 59144,
-    'action': ['send'],
+    'action': ['send', 'nft'],
     'token': {
       'ETH': '0x0000000000000000000000000000000000000000',
     },
@@ -62,7 +63,7 @@ Chains = {
   },
   'scroll': {
     'id': 534352,
-    'action': ['send'],
+    'action': ['send', 'nft'],
     'token': {
       'ETH': '0x0000000000000000000000000000000000000000',
     },
@@ -70,7 +71,7 @@ Chains = {
   },
   'zksync': {
     'id': 324,
-    'action': [],
+    'action': ['nft'],
     'magiceden_alias': '-zksync',
   },
   'mantle': {
@@ -79,7 +80,7 @@ Chains = {
   },
   'bsc': {
     'id': 56,
-    'action': ['send'],
+    'action': ['send', 'nft'],
     'token': {
       'BNB': '0x0000000000000000000000000000000000000000',
     },
@@ -94,9 +95,11 @@ Chains.update({
   'arb': Chains['arbitrum'],
   'arbi': Chains['arbitrum'],
   'bnb': Chains['bsc'],
+  'binance': Chains['bsc'],
 })
 
 magicLinkCode = {
   'send': 'WqL5jFAm',
   'swap': '1se4O1TV',
+  'nft': 'rD7pPx8q',
 }
