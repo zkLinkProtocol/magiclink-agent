@@ -204,8 +204,7 @@ def send_token(token: str, amount: str, recipient: str, chain: str):
     return json.dumps({"error": f"Currently don't support send {token} on {chain}"})
 
 def swap(token_from: str, token_to: str, amount_from: str, chain: str):
-  """Use this function to swap or buy one ERC20 token from another ERC20 token. This function doesn't support cross-chain swap. If user specify source chain and destination chain,
-  we should not use this function.
+  """Use this function to swap or buy one ERC20 token from another ERC20 token on same chain. Call ***cross_chain*** instead if user tell you two different chains.
   This function doesn't support set `amount_to` (amount of token_to). If the user gives amount_to, please inform them that this function does not support specify target amount
   This function only support swap between ERC20 token or ETH. BTC, BNB, etc are not supported.
 
@@ -277,6 +276,41 @@ def create_coin(name: str, icon_url: str, description: str, symbol: str):
   except:
     return json.dumps({"error": f"Failed to generate transaction to create coin"})
 
+def cross_chain(amount: str, chain_from: str, token_from: str, chain_to: str, token_to: str):
+  """Use this function to bridge token between different networks.
+
+  Args:
+    amount (str): The amount of token that you want to cross chain. Ask user if you don't know.
+    chain_from (str): The blockchain where you want to cross chain. Optional value can be Ethereum, Optimism, Base, Arbitrum, Linea, Manta, BSC. Ask user if you don't know.
+    token_from (str): The token you want to cross chain. Optional value can be ETH, USDT, USDC, WETH, Ask user if you don't know.
+    chain_to (str): The blockchain where you want to receive. Optional value can be Ethereum, Optimism, Base, Arbitrum, Linea, Manta, BSC. Ask user if you don't know.
+    token_to (str): The token you want to receive. Ask user if you don't know.
+
+  Returns:
+    str: url string of magicLinks to cross chain.
+  """
+  try:
+    info_from = Chains[chain_from.lower()]
+    info_to = Chains[chain_to.lower()]
+    if 'bridge' not in info_from['action'] or 'bridge' not in info_to['action']:
+      raise Exception(f'Bridge action currently unavailable from {chain_from} to {chain_to}')
+    chainIdFrom = info_from['id']
+    chainIdTo = info_to['id']
+    tokenAddressFrom = info_from['token'][token_from.upper()]
+    tokenAddressTo = info_to['token'][token_to.upper()]
+    param = base64.urlsafe_b64encode(json.dumps({
+      "chainId": chainIdFrom,
+      "params": {
+        'bridgeAmount': amount,
+        "tokenFrom": tokenAddressFrom,
+        "toChainId": str(chainIdTo),
+        "tokenTo": tokenAddressTo,
+      }
+    }, separators=(',', ':')).encode()).decode()
+    return f"https://magic.zklink.io/intent/{magicLinkCode['bridge']}/confirm?params={param}"
+  except:
+    return json.dumps({"error": f"Failed to generate transaction to cross chain"})
+
 chatbot = Agent(
   agent_id = 'magicLinkAgent',
   model = OpenAIChat(id = 'gpt-4o-mini-2024-07-18', temperature = 0.0),
@@ -294,6 +328,7 @@ chatbot = Agent(
     buy_nft,
     get_popular_nft,
     create_coin,
+    cross_chain,
     DuckDuckGo(),
   ],
   use_tools = True,
