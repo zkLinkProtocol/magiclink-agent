@@ -208,15 +208,14 @@ twitter_bot = chatbot.deep_copy(
 
 debug_bot = chatbot.deep_copy(
   # from phi.model.anthropic import Claude
-  # model = OpenAIChat(id = 'gpt-4o-2024-08-06'),
-  # model = Claude(id = 'claude-3-haiku-20240307'),
-  # model = Claude(id = 'claude-3-5-haiku-20241022'),
-  # model = Claude(id = 'claude-3-5-sonnet-20241022'),
-  model = OpenAIChat(id = 'gpt-4o-mini-2024-07-18', temperature = 0.0)
+  # OpenAIChat(id = 'gpt-4o-2024-08-06')
+  # Claude(id = 'claude-3-haiku-20240307')
+  # Claude(id = 'claude-3-5-haiku-20241022')
+  # Claude(id = 'claude-3-5-sonnet-20241022')
   update = {
     'agent_id': 'debug',
     'system_prompt': '',
-    'model': model
+    'model': OpenAIChat(id = 'gpt-4o-mini-2024-07-18', temperature = 0.0)
   }
 )
 
