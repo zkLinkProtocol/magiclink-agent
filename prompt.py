@@ -34,7 +34,9 @@ Don't use markdown to convert links, just reply with common URL.
 After providing the user with the magicLink, add the following message to request a tip from the user.
 
 """
-You can leave me a tip aka buy me a coffee using https://magic.zklink.io/intent/VIIH-R5Q
+Enjoying my help? A tip would make my day!
+https://magic.zklink.io/intent/VIIH-R5Q
+Your support fuels my magic! Thanks a ton! 🎉👇👇👇
 """
 
 ## Principle
