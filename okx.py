@@ -23,7 +23,7 @@ class OKX(Client):
     return {
       'Content-Type': 'application/json',
       'OK-ACCESS-KEY': self.API_ACCESS_KEY,
-      'OK-ACCESS-SIGN': str(sign),
+      'OK-ACCESS-SIGN': str(sign, encoding = 'utf8'),
       'OK-ACCESS-TIMESTAMP': timestamp,
       'OK-ACCESS-PASSPHRASE': self.PASSPHRASE,
       'OK-ACCESS-PROJECT': self.PROJECT,
