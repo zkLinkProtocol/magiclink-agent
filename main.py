@@ -89,7 +89,7 @@ def buy_nft(chain: str, address: str, quantity: int = 1):
 
   Args:
     chain (str): The blockchain where you buy NFT. Optional value can be Ethereum, Base, Optimism, Arbitrum, BSC, Linea, Scroll, ZkSync. Ask user if you don't know.
-    address (str): The NFT address. Ask user or call ***get_nft_info*** if you don't know.
+    address (str): The NFT address.
     quantity (int): Number of NFT to buy. Defaults to 1.
 
   Returns:
@@ -252,7 +252,7 @@ def create_coin(name: str, icon_url: str, description: str, symbol: str):
 
   Args:
     name (str): The full name of meme coin.
-    icon_url (str): The icon image url of meme coin. Ask user if you don't know.
+    icon_url (str): The icon image url of meme coin.
     description (str): The description of meme coin. Auto generate description if you don't know.
     symbol (str): The symbol of meme coin. Default value is as same as uppercase name. 
 
