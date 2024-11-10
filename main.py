@@ -152,10 +152,28 @@ def get_token_price(token: str):
     token (str): The token you want to query.
 
   Returns:
-    str: JSON string of token price.
+    str: JSON string of token price and some related token name.
   """
   try:
-    return json.dumps(okx.req('GET', f"/api/v5/market/ticker?instId={token.upper()}-USDT"))
+    coin_resp = httpx.get(f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids={token}")
+    info = coin_resp.json()
+    if len(info) > 0:
+      return json.dumps({
+        "token_info": info[0],
+        "related_tokens": []
+      })
+    coin_resp = httpx.get(f"https://api.coingecko.com/api/v3/search?query={token}")
+    info = coin_resp.json()['coins']
+    coin_id = info[0]['id']
+    related = []
+    if len(info) > 1:
+      for other_coin in info[1:4]:
+        related.append(other_coin['id'])
+    coin_resp = httpx.get(f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids={coin_id}")
+    return json.dumps({
+      "token_info": coin_resp.json()[0],
+      "related_tokens": related
+    })
   except:
     return json.dumps({"error": f"Failed to retrive price for {token}"})
 
