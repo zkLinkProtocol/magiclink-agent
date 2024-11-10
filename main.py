@@ -25,7 +25,7 @@ def get_popular_nft(chain: str, num: int = 5):
 
   Args:
     num (str): The number of NFT to return. Defaults to 5.
-    chain (str): The blockchain where you buy NFT. Optional value can be Ethereum, Base, Optimism, Arbitrum, BSC, Linea, Scroll, ZkSync. Ask user if you don't know.
+    chain (str): The blockchain where you buy NFT. Optional value can be Ethereum, Base, Optimism, Arbitrum, BSC, Linea, Scroll, Ask user if you don't know.
 
   Returns:
     str: JSON string of NFT information.
@@ -56,7 +56,7 @@ def get_nft_info(chain: str, name: str):
   """Use this function to get NFT information such as contract address, and price.
 
   Args:
-    chain (str): The blockchain where you buy NFT. Optional value can be Ethereum, Base, Optimism, Arbitrum, BSC, Linea, Scroll, ZkSync. Ask user if you don't know.
+    chain (str): The blockchain where you buy NFT. Optional value can be Ethereum, Base, Optimism, Arbitrum, BSC, Linea, Scroll. Ask user if you don't know.
     name (str): The nft name where you buy NFT. Ask user if you don't know.
 
   Returns:
@@ -88,7 +88,7 @@ def buy_nft(chain: str, address: str, quantity: int = 1):
   """Use this function to generate links to buy NFT.
 
   Args:
-    chain (str): The blockchain where you buy NFT. Optional value can be Ethereum, Base, Optimism, Arbitrum, BSC, Linea, Scroll, ZkSync. Ask user if you don't know.
+    chain (str): The blockchain where you buy NFT. Optional value can be Ethereum, Base, Optimism, Arbitrum, BSC, Linea, Scroll. Ask user if you don't know.
     address (str): The NFT address.
     quantity (int): Number of NFT to buy. Defaults to 1.
 
@@ -108,7 +108,10 @@ def buy_nft(chain: str, address: str, quantity: int = 1):
         "quantity": str(quantity),
       }
     }, separators=(',', ':')).encode()).decode()
-    return f"https://magic.zklink.io/intent/{magicLinkCode['nft']}/confirm?params={param}"
+    return json.dumps({
+      'magicLink': f"https://magic.zklink.io/intent/{magicLinkCode['nft']}/confirm?params={param}",
+      'tip_url': f"https://magic.zklink.io/intent/{random.choice(info['tip_code'])}",
+    })
   except:
     return json.dumps({"error": f"Failed to generate transaction to buy NFT"})
 
@@ -183,7 +186,7 @@ def send_token(token: str, amount: str, recipient: str, chain: str):
     chain (str): The blockchain where the transaction will happen. Optional value can be Ethereum, Optimism, Base, Arbitrum, zkLink, Linea, Manta, Scroll, BSC. Ask user if you don't know
 
   Returns:
-    str: url string of magicLinks to send token.
+    str: json string with magic link url to send token and tip_url.
   """
   try:
     info = Chains[chain.lower()]
@@ -199,7 +202,10 @@ def send_token(token: str, amount: str, recipient: str, chain: str):
         "recipient": recipient,
       }
     }, separators=(',', ':')).encode()).decode()
-    return f"https://magic.zklink.io/intent/{magicLinkCode['send']}/confirm?params={param}"
+    return json.dumps({
+      'magicLink': f"https://magic.zklink.io/intent/{magicLinkCode['send']}/confirm?params={param}",
+      'tip_url': f"https://magic.zklink.io/intent/{random.choice(info['tip_code'])}",
+    })
   except:
     return json.dumps({"error": f"Currently don't support send {token} on {chain}"})
 
@@ -243,7 +249,10 @@ def swap(token_from: str, token_to: str, amount_from: str, chain: str):
         "tokenTo": toAddress,
       }
     }, separators=(',', ':')).encode()).decode()
-    return f"https://magic.zklink.io/intent/{magicLinkCode['swap']}/confirm?params={param}"
+    return json.dumps({
+      'magicLink': f"https://magic.zklink.io/intent/{magicLinkCode['swap']}/confirm?params={param}",
+      'tip_url': f"https://magic.zklink.io/intent/{random.choice(info['tip_code'])}",
+    })
   except:
     return json.dumps({"error": f"Currently don't support swap {token_from} and {token_to} on {chain}"})
 
@@ -272,7 +281,10 @@ def create_coin(name: str, icon_url: str, description: str, symbol: str):
         "coinDescription": description,
       }
     }, separators=(',', ':')).encode()).decode()
-    return f"https://magic.zklink.io/intent/{magicLinkCode['dxfun']}/confirm?params={param}"
+    return json.dumps({
+      'magicLink': f"https://magic.zklink.io/intent/{magicLinkCode['dxfun']}/confirm?params={param}",
+      'tip_url': f"https://magic.zklink.io/intent/{random.choice(Chains['base']['tip_code'])}",
+    })
   except:
     return json.dumps({"error": f"Failed to generate transaction to create coin"})
 
@@ -307,7 +319,10 @@ def cross_chain(amount: str, chain_from: str, token_from: str, chain_to: str, to
         "tokenTo": tokenAddressTo,
       }
     }, separators=(',', ':')).encode()).decode()
-    return f"https://magic.zklink.io/intent/{magicLinkCode['bridge']}/confirm?params={param}"
+    return json.dumps({
+      'magicLink': f"https://magic.zklink.io/intent/{magicLinkCode['bridge']}/confirm?params={param}",
+      'tip_url': f"https://magic.zklink.io/intent/{random.choice(info_from['tip_code'])}",
+    })
   except:
     return json.dumps({"error": f"Failed to generate transaction to cross chain"})
 

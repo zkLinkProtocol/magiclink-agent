@@ -10,6 +10,7 @@ Chains = {
     },
     'magiceden_alias': '',
     'okx_alias': 'Ethereum',
+    'tip_code': ["uTmb6uIl", "c0IjMs6Q"],
   },
   'optimism': {
     'id': 10,
@@ -22,6 +23,7 @@ Chains = {
     },
     'magiceden_alias': '-optimism',
     'okx_alias': 'Optimism',
+    'tip_code': ["fQq89cWx", "xdWlLdrg"],
   },
   'base': {
     'id': 8453,
@@ -33,6 +35,7 @@ Chains = {
     },
     'magiceden_alias': '-base',
     'okx_alias': 'Base',
+    'tip_code': ["HyqddBPo", "JUWp0zIV"],
   },
   'arbitrum': {
     'id': 42161,
@@ -45,6 +48,7 @@ Chains = {
     },
     'magiceden_alias': '-arbitrum',
     'okx_alias': 'Arbitrum',
+    'tip_code': ["bYmi4eQ7", "gKLvKMpN"],
   },
   'nova': {
     'id': 810180,
@@ -54,6 +58,7 @@ Chains = {
       'USDT': '0x2F8A25ac62179B31D62D7F80884AE57464699059',
       'USDC': '0x1a1A3b2ff016332e866787B311fcB63928464509',
     },
+    'tip_code': ["acZ99ecG", "StU1jsQM"],
   },
   'linea': {
     'id': 59144,
@@ -65,6 +70,7 @@ Chains = {
       'WETH': '0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f',
     },
     'magiceden_alias': '-linea',
+    'tip_code': ["fOw-5Jpj", "BJZPLrI1"],
   },
   'manta': {
     'id': 169,
@@ -75,6 +81,7 @@ Chains = {
       'USDC': '0xb73603c5d87fa094b7314c74ace2e64d165016fb',
       'WETH': '0x0dc808adce2099a9f62aa87d9670745aba741746',
     },
+    'tip_code': ["D0nk1F0g", "mJE5-gpF"],
   },
   'scroll': {
     'id': 534352,
@@ -83,11 +90,7 @@ Chains = {
       'ETH': '0x0000000000000000000000000000000000000000',
     },
     'magiceden_alias': '-scroll',
-  },
-  'zksync': {
-    'id': 324,
-    'action': ['nft'],
-    'magiceden_alias': '-zksync',
+    'tip_code': ["W4agUrkW", "V6u-RI5A"],
   },
   'bsc': {
     'id': 56,
@@ -99,6 +102,7 @@ Chains = {
       'USDC': '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',
     },
     'magiceden_alias': '-bsc',
+    'tip_code': ["CO5SL0Yd", "WcaXiPYy"],
   },
 }
 
@@ -113,9 +117,9 @@ Chains.update({
 })
 
 magicLinkCode = {
-  'send': 'WqL5jFAm',
-  'swap': '1se4O1TV',
-  'nft': 'rD7pPx8q',
+  'send': '3TIvZ9f7',
+  'swap': 'CXMVzFJX',
+  'nft': 'l24qLOg1',
   'dxfun': 'wpgDP6DU',
-  'bridge': 'ordsAnio',
+  'bridge': 'ruQSUdKn',
 }
