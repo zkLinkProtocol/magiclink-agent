@@ -88,7 +88,7 @@ def buy_nft(chain: str, address: str, quantity: int = 1):
   """Use this function to generate links to buy NFT.
 
   Args:
-    chain (str): The blockchain where you buy NFT. Optional value can be Ethereum, Base, Optimism, Arbitrum, BSC, Linea, Scroll. Ask user if you don't know.
+    chain (str): The blockchain where you buy NFT. Optional value can be Ethereum, Base, Optimism, Arbitrum, BSC, Linea, Scroll, Zklink. Ask user if you don't know.
     address (str): The NFT address.
     quantity (int): Number of NFT to buy. Defaults to 1.
 
